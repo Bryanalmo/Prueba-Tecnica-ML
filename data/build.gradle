@@ -1,4 +1,4 @@
-apply plugin: 'com.android.application'
+apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-kapt'
 apply plugin: 'kotlin-android-extensions'
@@ -7,13 +7,13 @@ android {
     compileSdkVersion 29
 
     defaultConfig {
-        applicationId "com.bryanalvarez.mlsearch"
         minSdkVersion 21
         targetSdkVersion 29
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
     }
 
     buildTypes {
@@ -30,9 +30,14 @@ dependencies {
     implementation Dep.arrowCore
     implementation Dep.androidxCore
     implementation Dep.appcompat
-    implementation Dep.constraintLayout
-    implementation Dep.legacySupport
     testImplementation Dep.junit
     androidTestImplementation Dep.junitExt
     androidTestImplementation Dep.espresso
+
+    implementation Dep.retrofit
+    implementation Dep.retrofitConverterGson
+    implementation Dep.retrofitAdapter
+
+    implementation Dep.rxAndroid
+    implementation Dep.rxJava
 }

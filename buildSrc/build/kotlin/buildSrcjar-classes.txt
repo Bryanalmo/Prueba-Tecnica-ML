@@ -1,0 +1,1 @@
+/Users/bryanalvarez/Documents/ML/Prueba-Tecnica-ML/buildSrc/build/classes/kotlin/main/Dep.class:/Users/bryanalvarez/Documents/ML/Prueba-Tecnica-ML/buildSrc/build/classes/kotlin/main/Versions.class
