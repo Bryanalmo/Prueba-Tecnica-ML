@@ -25,6 +25,7 @@ android {
 }
 
 dependencies {
+    api project(path: ':data')
     implementation fileTree(dir: "libs", include: ["*.jar"])
     implementation Dep.kotlinStandardLibrary
     implementation Dep.arrowCore
