@@ -22,6 +22,10 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
         }
     }
+
+    dataBinding {
+        enabled = true
+    }
 }
 
 dependencies {
@@ -33,7 +37,25 @@ dependencies {
     implementation Dep.appcompat
     implementation Dep.constraintLayout
     implementation Dep.legacySupport
+    implementation Dep.navigationFragment
+    implementation Dep.navigationUI
+    implementation Dep.material
+    implementation Dep.recyclerView
+    implementation Dep.glide
+
+    implementation Dep.rxAndroid
+
+    implementation Dep.roomRuntime
+    implementation Dep.roomKtx
+    kapt Dep.roomCompiler
+
+    implementation Dep.koin
+    implementation Dep.koinViewModel
+    implementation Dep.koinScope
+    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
     testImplementation Dep.junit
     androidTestImplementation Dep.junitExt
     androidTestImplementation Dep.espresso
+    implementation Dep.paging
 }
