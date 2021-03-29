@@ -6,7 +6,6 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.bryanalvarez.data.local.repository.UserSearchRepository
-import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.domain.models.Item
 import com.bryanalvarez.domain.models.UserSearch
 import com.bryanalvarez.domain.repository.Repository
