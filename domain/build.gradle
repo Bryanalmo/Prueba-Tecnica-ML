@@ -37,8 +37,11 @@ dependencies {
     implementation Dep.coroutinesCore
     implementation Dep.coroutinesAndroid
 
+    implementation Dep.roomRuntime
+
     implementation Dep.retrofitConverterGson
     implementation Dep.rxAndroid
     implementation Dep.rxJava
+    implementation Dep.paging
 
 }

@@ -29,6 +29,8 @@ object Versions {
     val retrofitAdapter ="2.4.0"
     val coroutinesCore ="1.0.1"
     val coroutinesAndroid ="1.0.1"
+    val paging = "2.1.2"
+    val loggingInterceptor = "4.0.1"
 }
 object Dep {
     val kotlinStandardLibrary = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
@@ -64,4 +66,7 @@ object Dep {
     val retrofitAdapter ="com.squareup.retrofit2:adapter-rxjava2:${Versions.retrofitAdapter}"
     val coroutinesCore ="org.jetbrains.kotlinx:kotlinx-coroutines-core:${Versions.coroutinesCore}"
     val coroutinesAndroid ="org.jetbrains.kotlinx:kotlinx-coroutines-android:${Versions.coroutinesAndroid}"
+    val paging ="androidx.paging:paging-runtime:${Versions.paging}"
+    val loggingInterceptor ="com.squareup.okhttp3:logging-interceptor:${Versions.loggingInterceptor}"
 }
+

@@ -38,7 +38,14 @@ dependencies {
     implementation Dep.retrofit
     implementation Dep.retrofitConverterGson
     implementation Dep.retrofitAdapter
+    implementation Dep.paging
 
     implementation Dep.rxAndroid
     implementation Dep.rxJava
+
+    implementation Dep.roomRuntime
+    implementation Dep.roomKtx
+    kapt Dep.roomCompiler
+
+    implementation Dep.loggingInterceptor
 }

@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="item"
+            type="com.bryanalvarez.domain.models.Item" />
+    </data>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/dimen15">
+
+        <ImageView
+            android:id="@+id/itemImage"
+            android:layout_width="@dimen/dimen120"
+            android:layout_height="@dimen/dimen120"
+            tools:src="@color/colorPrimaryDark"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintLeft_toLeftOf="parent" />
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:layout_marginLeft="@dimen/dimen10"
+            app:layout_constraintTop_toTopOf="@id/itemImage"
+            app:layout_constraintLeft_toRightOf="@id/itemImage"
+            app:layout_constraintRight_toRightOf="parent">
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="Motorola Moto G - Nuevo, buen estado 10/10"
+                android:textColor="@color/colorBlack"
+                android:text="@{item.title}"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:textSize="@dimen/dimenSp14" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="$ 600.990"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:textColor="@color/colorBlack"
+                android:text="@{`$ ` + item.getPriceFormatted}"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimenSp20"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                tools:text="en 36x $3.528"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:textColor="@color/colorBlack"
+                android:text="@{`en ` + item.installments.quantity + `x ` + `$ ` + item.installments.getAmountFormatted }"
+                android:textSize="@dimen/dimenSp12"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="@dimen/dimen5"
+                android:textColor="@color/colorGreen"
+                android:text="Envío gratis"
+                android:visibility="@{item.shipping.free_shipping ? View.VISIBLE : View.GONE }"
+                android:textSize="@dimen/dimenSp12"/>
+
+        </LinearLayout>
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</layout>
