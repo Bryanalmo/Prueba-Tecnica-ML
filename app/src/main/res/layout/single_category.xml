@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="category"
+            type="com.bryanalvarez.domain.models.Category" />
+    </data>
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:layout_margin="@dimen/dimen8"
+        android:orientation="vertical">
+
+        <androidx.cardview.widget.CardView
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/dimen40"
+            android:layout_marginTop="@dimen/dimen5"
+            app:cardElevation="@dimen/dimen5"
+            app:cardCornerRadius="@dimen/dimen20">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:paddingVertical="@dimen/dimen5"
+                android:gravity="center"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginHorizontal="@dimen/dimen20"
+                    tools:text="AR"
+                    android:textSize="10sp"
+                    android:textColor="@color/colorBlack"
+                    android:text="@{category.name.substring(0,2).toUpperCase()}"/>
+
+            </LinearLayout>
+
+        </androidx.cardview.widget.CardView>
+
+        <TextView
+            android:layout_width="@dimen/dimen60"
+            android:layout_height="wrap_content"
+            tools:text="Articulos para vehiculos"
+            android:layout_marginTop="@dimen/dimen5"
+            android:textAlignment="center"
+            android:textSize="@dimen/dimenSp10"
+            android:textColor="@color/colorBlack"
+            android:text="@{category.name}"/>
+
+    </LinearLayout>
+
+
+</layout>

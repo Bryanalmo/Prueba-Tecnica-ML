@@ -6,6 +6,7 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.bryanalvarez.data.local.repository.UserSearchRepository
+import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.domain.models.Item
 import com.bryanalvarez.domain.models.UserSearch
 import com.bryanalvarez.domain.repository.Repository
@@ -57,7 +58,45 @@ class AppRepository(private val service: Service,
                 Left(Failure(Throwable()))
             }
         }catch (e: Exception) {
-            Log.d("MYLOG", "getUserRecentSearch ERROR EX -> ${e.localizedMessage}")
+            Log.d("MYLOG", "addUserSearch ERROR EX -> ${e.localizedMessage}")
+            Left(Failure(Throwable(e.message.toString())))
+        }
+    }
+
+    override suspend fun getCategories(): Either<Failure, List<Category>> {
+        return try{
+            val response = service.getCategories().execute()
+            val data = response.body()
+            val code = response.code()
+            if(code == 200 && response.isSuccessful && data != null){
+                Right(data)
+            }else{
+                Left(Failure(Throwable()))
+            }
+        }catch (ex: JSONException) {
+            Log.d("MYLOG", "getCategories ERROR JSON -> ${ex.localizedMessage}")
+            Left(Failure(Throwable()))
+        }  catch (e: Exception) {
+            Log.d("MYLOG", "getCategories ERROR EX -> ${e.localizedMessage}")
+            Left(Failure(Throwable(e.message.toString())))
+        }
+    }
+
+    override suspend fun getItemsByCategory(categoryId: String): Either<Failure, List<Item>> {
+        return try{
+            val response = service.getItemsByCategory(categoryId).execute()
+            val data = response.body()
+            val code = response.code()
+            if(code == 200 && response.isSuccessful && data != null){
+                Right(data.results)
+            }else{
+                Left(Failure(Throwable()))
+            }
+        }catch (ex: JSONException) {
+            Log.d("MYLOG", "getItemsByCategory ERROR JSON -> ${ex.localizedMessage}")
+            Left(Failure(Throwable()))
+        }  catch (e: Exception) {
+            Log.d("MYLOG", "getItemsByCategory ERROR EX -> ${e.localizedMessage}")
             Left(Failure(Throwable(e.message.toString())))
         }
     }
