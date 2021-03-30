@@ -30,5 +30,14 @@
         android:id="@+id/resultsFragment"
         android:name="com.bryanalvarez.mlsearch.results.ResultsFragment"
         android:label="fragment_results"
-        tools:layout="@layout/fragment_results" />
+        tools:layout="@layout/fragment_results" >
+        <action
+            android:id="@+id/action_resultsFragment_to_itemDetailFragment"
+            app:destination="@id/itemDetailFragment" />
+    </fragment>
+    <dialog
+        android:id="@+id/itemDetailFragment"
+        android:name="com.bryanalvarez.mlsearch.itemDetail.ItemDetailFragment"
+        android:label="fragment_item_detail"
+        tools:layout="@layout/fragment_item_detail" />
 </navigation>

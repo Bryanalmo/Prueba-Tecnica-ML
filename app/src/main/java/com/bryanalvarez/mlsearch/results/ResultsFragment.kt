@@ -12,6 +12,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bryanalvarez.domain.models.Category
+import com.bryanalvarez.domain.models.Item
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentResultsBinding
 import kotlinx.android.synthetic.main.fragment_results.*
@@ -53,7 +54,7 @@ class ResultsFragment : Fragment() {
 
     private fun setupItemList(bySearch: Boolean){
         val adapter = ResultsAdapter{ item ->
-
+            goToItemDetail(item)
         }
         resultsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         resultsList.adapter = adapter
@@ -69,5 +70,11 @@ class ResultsFragment : Fragment() {
                 adapter.updateList(it)
             }
         })
+    }
+
+    private fun goToItemDetail(item: Item) {
+        var args = Bundle()
+        args.putSerializable("itemSelected", item)
+        findNavController().navigate(R.id.action_resultsFragment_to_itemDetailFragment, args)
     }
 }
