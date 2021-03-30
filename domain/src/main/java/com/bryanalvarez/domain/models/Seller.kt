@@ -6,5 +6,5 @@ data class Seller(
     val id: String? = null,
     val nickname: String? = null,
     val permalink: String? = null,
-    val power_seller_status: String? = null
+    val seller_reputation: Reputation? = null
 ): Serializable

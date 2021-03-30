@@ -257,7 +257,7 @@
                     app:layout_constraintTop_toBottomOf="@id/reputationIcon"
                     app:layout_constraintTop_toTopOf="@id/reputationIcon"
                     tools:text="MercadoLider Platinum"
-                    android:text="@{`MercadoLider ` + vm.seller.power_seller_status}"
+                    android:text="@{`MercadoLider ` + vm.seller.seller_reputation.power_seller_status}"
                     android:textColor="@color/colorBlack"
                     android:textSize="@dimen/dimenSp15"/>
 
