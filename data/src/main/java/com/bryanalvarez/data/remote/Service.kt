@@ -4,6 +4,7 @@ package com.bryanalvarez.data.remote
 import com.bryanalvarez.data.BuildConfig
 import com.bryanalvarez.data.dto.ItemsListResponse
 import com.bryanalvarez.domain.models.Category
+import com.bryanalvarez.domain.models.SellerInfo
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Call
@@ -23,6 +24,9 @@ interface Service{
 
     @GET("search")
     fun getItemsByCategory(@Query("category") categoryId: String): Call<ItemsListResponse>
+
+    @GET("search")
+    fun getItemsBySeller(@Query("seller_id") sellerId: String): Call<SellerInfo>
 
     companion object{
         private val client = OkHttpClient.Builder().apply {

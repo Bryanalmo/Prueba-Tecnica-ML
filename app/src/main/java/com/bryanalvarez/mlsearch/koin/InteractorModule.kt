@@ -11,10 +11,12 @@ val interactorModule = module {
     fun provideAddUserSearchInteractor(repository: Repository): AddUserSearch = AddUserSearch(repository)
     fun provideGetCategoriesInteractor(repository: Repository): GetCategories = GetCategories(repository)
     fun provideGetItemsByCategoryInteractor(repository: Repository): GetItemsByCategory = GetItemsByCategory(repository)
+    fun provideGetItemsBySellerInteractor(repository: Repository): GetItemsBySeller = GetItemsBySeller(repository)
 
     single { provideGetItemsBySearchInteractor(get()) }
     single { provideGetUserRecentSearchInteractor(get()) }
     single { provideAddUserSearchInteractor(get()) }
     single { provideGetCategoriesInteractor(get()) }
     single { provideGetItemsByCategoryInteractor(get()) }
+    single { provideGetItemsBySellerInteractor(get()) }
 }

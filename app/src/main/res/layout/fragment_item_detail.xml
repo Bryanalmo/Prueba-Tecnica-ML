@@ -1,0 +1,297 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".itemDetail.ItemDetailFragment">
+
+    <data>
+
+        <import type="android.view.View" />
+
+        <variable
+            name="vm"
+            type="com.bryanalvarez.mlsearch.itemDetail.ItemDetailViewModel" />
+
+    </data>
+
+    <androidx.coordinatorlayout.widget.CoordinatorLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+        <com.google.android.material.appbar.AppBarLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <Toolbar
+                android:id="@+id/toolBarItemDetail"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+
+                    <TextView
+                        android:id="@+id/searchText"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_marginLeft="@dimen/dimen10"
+                        android:gravity="center_vertical"
+                        android:textColor="@color/colorBlack"
+                        android:text="Producto"
+                        android:textSize="@dimen/dimenSp20" />
+
+            </Toolbar>
+    </com.google.android.material.appbar.AppBarLayout>
+
+        <ScrollView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
+
+            <androidx.constraintlayout.widget.ConstraintLayout
+                android:orientation="vertical"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:paddingHorizontal="@dimen/dimen15"
+                android:paddingTop="@dimen/dimen15"
+                android:layout_marginBottom="@dimen/dimen20">
+
+                <TextView
+                    android:id="@+id/itemConditionSoldQuantityText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toTopOf="parent"
+                    tools:text="Nuevo  |  80 vendidos"
+                    android:text="@{vm.itemSelected.getConditionTranslate + `  |  ` +  vm.itemSelected.sold_quantity + ` vendidos`}"/>
+
+                <TextView
+                    android:id="@+id/itemTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen5"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    android:textSize="@dimen/dimenSp20"
+                    android:textColor="@color/colorBlack"
+                    app:layout_constraintTop_toBottomOf="@id/itemConditionSoldQuantityText"
+                    tools:text="Articulo vendido por Mercado Libre "
+                    android:text="@{vm.itemSelected.title}"/>
+
+                <ImageView
+                    android:id="@+id/itemImage"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    tools:src="@drawable/ic_launcher_background"
+                    app:layout_constraintTop_toBottomOf="@id/itemTitle"/>
+
+                <TextView
+                    android:id="@+id/itemPrice"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="$ 600.990"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/itemImage"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:textColor="@color/colorBlack"
+                    android:text="@{`$ ` + vm.itemSelected.getPriceFormatted}"
+                    android:textSize="30sp"/>
+
+                <TextView
+                    android:id="@+id/itemInstallments"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    tools:text="en 36x $3.528"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/itemPrice"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:textColor="@color/colorBlack"
+                    android:text="@{`en ` + vm.itemSelected.installments.quantity + `x ` + `$ ` + vm.itemSelected.installments.getAmountFormatted }"
+                    android:textSize="@dimen/dimenSp20"/>
+
+                <TextView
+                    android:id="@+id/isMercadoPagoText"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/itemInstallments"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:textColor="@color/colorBlue"
+                    android:visibility="@{vm.itemSelected.accepts_mercadopago ? View.VISIBLE : View.GONE}"
+                    android:text="Llevalo con MercadoPago"
+                    android:textSize="@dimen/dimenSp15"/>
+
+                <TextView
+                    android:id="@+id/isFreeShipping"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isMercadoPagoText"
+                    android:layout_marginBottom="@dimen/dimen5"
+                    android:textColor="@color/colorGreen"
+                    android:text="Envío gratis"
+                    android:visibility="@{vm.itemSelected.shipping.free_shipping ? View.VISIBLE : View.GONE }"
+                    android:textSize="@dimen/dimenSp15"/>
+
+                <TextView
+                    android:id="@+id/itemStockAvailableTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/isFreeShipping"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:textColor="@color/colorBlack"
+                    android:text="Stock disponible"
+                    android:textStyle="bold"
+                    android:textSize="@dimen/dimenSp18"/>
+
+                <TextView
+                    android:id="@+id/itemStockAvailableText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    app:layout_constraintLeft_toRightOf="@id/itemStockAvailableTitle"
+                    app:layout_constraintTop_toBottomOf="@id/itemStockAvailableTitle"
+                    app:layout_constraintTop_toTopOf="@id/itemStockAvailableTitle"
+                    tools:text="(60 unidades)"
+                    android:text="@{`(` + vm.itemSelected.available_quantity + `)`}"
+                    android:textSize="@dimen/dimenSp18"/>
+
+                <View
+                    android:id="@+id/viewDivider1"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen1"
+                    android:layout_marginVertical="@dimen/dimen20"
+                    app:layout_constraintTop_toBottomOf="@id/itemStockAvailableText"
+                    android:background="@color/colorGreyLight"/>
+
+                <TextView
+                    android:id="@+id/sellerPostsTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewDivider1"
+                    android:layout_marginTop="@dimen/dimen30"
+                    android:textColor="@color/colorBlack"
+                    android:text="Más publicaciones del vendedor"
+                    android:textSize="@dimen/dimenSp20"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/sellerPostsList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    app:layout_constraintTop_toBottomOf="@id/sellerPostsTitle"/>
+
+                <TextView
+                    android:id="@+id/sellerInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sellerPostsList"
+                    android:layout_marginTop="@dimen/dimen30"
+                    android:textColor="@color/colorBlack"
+                    android:text="Información sobre el vendedor"
+                    android:textSize="@dimen/dimenSp20"/>
+
+                <TextView
+                    android:id="@+id/sellerNameTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sellerInfoTitle"
+                    android:layout_marginTop="@dimen/dimen10"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    android:textColor="@color/colorBlack"
+                    android:text="Vendido por "
+                    android:textSize="@dimen/dimenSp15"/>
+
+                <TextView
+                    android:id="@+id/sellerNameText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    app:layout_constraintLeft_toRightOf="@id/sellerNameTitle"
+                    app:layout_constraintTop_toBottomOf="@id/sellerNameTitle"
+                    app:layout_constraintTop_toTopOf="@id/sellerNameTitle"
+                    tools:text="Vendedor"
+                    android:text="@{vm.seller.nickname}"
+                    android:textColor="@color/colorBlue"
+                    android:textSize="@dimen/dimenSp15"/>
+
+                <ImageView
+                    android:id="@+id/locationIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/sellerNameText"
+                    android:src="@drawable/ic_location"/>
+
+                <TextView
+                    android:id="@+id/sellerLocation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    app:layout_constraintLeft_toRightOf="@id/locationIcon"
+                    app:layout_constraintTop_toBottomOf="@id/locationIcon"
+                    app:layout_constraintTop_toTopOf="@id/locationIcon"
+                    tools:text="Bogotá, Colombia"
+                    android:text="@{vm.itemSelected.address.addressFormatted}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/dimenSp15"/>
+
+                <ImageView
+                    android:id="@+id/reputationIcon"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="@dimen/dimen10"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/locationIcon"
+                    android:src="@drawable/ic_reputation"/>
+
+                <TextView
+                    android:id="@+id/sellerReputation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/dimen5"
+                    app:layout_constraintLeft_toRightOf="@id/reputationIcon"
+                    app:layout_constraintTop_toBottomOf="@id/reputationIcon"
+                    app:layout_constraintTop_toTopOf="@id/reputationIcon"
+                    tools:text="MercadoLider Platinum"
+                    android:text="@{`MercadoLider ` + vm.seller.power_seller_status}"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="@dimen/dimenSp15"/>
+
+                <View
+                    android:id="@+id/viewDivider3"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/dimen1"
+                    android:layout_marginVertical="@dimen/dimen20"
+                    app:layout_constraintTop_toBottomOf="@id/sellerReputation"
+                    android:background="@color/colorGreyLight"/>
+
+                <TextView
+                    android:id="@+id/itemInfoTitle"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    app:layout_constraintLeft_toLeftOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/viewDivider3"
+                    android:layout_marginTop="@dimen/dimen30"
+                    android:textColor="@color/colorBlack"
+                    android:text="Información del producto"
+                    android:textSize="@dimen/dimenSp20"/>
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/itemInfoList"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="@dimen/dimen20"
+                    app:layout_constraintBottom_toBottomOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/itemInfoTitle"/>
+
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
+
+        </ScrollView>
+
+    </androidx.coordinatorlayout.widget.CoordinatorLayout>
+</layout>
