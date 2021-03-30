@@ -18,6 +18,11 @@ interface Service{
     @GET("search")
     fun getItemsBySearch(@Query("q") textSearch: String, @Query("limit") limit: Int, @Query("offset") offset: Int): Call<ItemsListResponse>
 
+    @GET("categories")
+    fun getCategories(): Call<List<Category>>
+
+    @GET("search")
+    fun getItemsByCategory(@Query("category") categoryId: String): Call<ItemsListResponse>
 
     companion object{
         private val client = OkHttpClient.Builder().apply {

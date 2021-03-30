@@ -8,8 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentResultsBinding
 import kotlinx.android.synthetic.main.fragment_results.*
@@ -34,11 +36,22 @@ class ResultsFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         arguments?.getString("searchText")?.let {
-            setupItemList(it)
+            viewModel.searchText = it
+            setupItemList(true)
         }
+
+        arguments?.getSerializable("category")?.let {
+            viewModel.categorySelected = it as Category
+            setupItemList(false)
+        }
+
+        searchResults.setOnClickListener {
+            findNavController().navigate(R.id.searchFragment)
+        }
+        viewModel.notifyChange()
     }
 
-    private fun setupItemList(search: String){
+    private fun setupItemList(bySearch: Boolean){
         val adapter = ResultsAdapter{ item ->
 
         }
@@ -51,7 +64,7 @@ class ResultsFragment : Fragment() {
                 LinearLayoutManager.VERTICAL
             )
         )
-        viewModel.getItemsBySearch(search).observe(this, Observer { list ->
+        viewModel.getItemsList(bySearch).observe(this, Observer { list ->
             list.let {
                 adapter.updateList(it)
             }

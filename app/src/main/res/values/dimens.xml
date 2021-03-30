@@ -14,4 +14,9 @@
     <dimen name="dimenSp20">20sp</dimen>
     <dimen name="dimen5">5dp</dimen>
     <dimen name="dimenSp12">12sp</dimen>
+    <dimen name="dimen35">35dp</dimen>
+    <dimen name="dimen3">3dp</dimen>
+    <dimen name="dimen2">2dp</dimen>
+    <dimen name="dimen8">8dp</dimen>
+    <dimen name="dimenSp10">10sp</dimen>
 </resources>

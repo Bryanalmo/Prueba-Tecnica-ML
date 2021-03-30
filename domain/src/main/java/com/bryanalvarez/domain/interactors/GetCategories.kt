@@ -4,19 +4,18 @@ import arrow.core.Either
 import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
-import com.bryanalvarez.domain.models.Item
-import com.bryanalvarez.domain.models.UserSearch
+import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.domain.repository.Repository
 
-class GetUserRecentSearch (private val repository: Repository):
-    UseCase<List<UserSearch>, GetUserRecentSearch.Params>() {
+class GetCategories(private val repository: Repository):
+    UseCase<List<Category>, GetCategories.Params>() {
 
     data class Params(
         val param: Any
     ) : UseCase.Input
 
-    override suspend fun run(parameter: Params?): Either<Failure, List<UserSearch>> {
-        repository.getUserRecentSearch().fold(
+    override suspend fun run(parameter: Params?): Either<Failure, List<Category>> {
+        repository.getCategories().fold(
             {
                 return Left(it)
             },{
