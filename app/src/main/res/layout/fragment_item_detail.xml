@@ -15,8 +15,9 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
-    android:layout_width="match_parent"
-    android:layout_height="match_parent">
+        android:id="@+id/itemDetailContainer"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <com.google.android.material.appbar.AppBarLayout
         android:layout_width="match_parent"
@@ -174,19 +175,52 @@
                     android:text="Más publicaciones del vendedor"
                     android:textSize="@dimen/dimenSp20"/>
 
-                <androidx.recyclerview.widget.RecyclerView
-                    android:id="@+id/sellerPostsList"
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/sellerPostsContainer"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginTop="@dimen/dimen10"
-                    app:layout_constraintTop_toBottomOf="@id/sellerPostsTitle"/>
+                    app:layout_constraintTop_toBottomOf="@id/sellerPostsTitle">
+
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/sellerPostsList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="@{vm.loadingItemsList ? View.GONE : View.VISIBLE}"
+                        android:layout_marginTop="@dimen/dimen10" />
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/loaderCategoriesList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:layout_constraintTop_toTopOf="parent"
+                        android:visibility="@{vm.loadingItemsList ? View.VISIBLE : View.GONE}"
+                        tools:visibility="visible">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="vertical">
+
+                            <include layout="@layout/loader_single_item_list" />
+                            <include layout="@layout/loader_single_item_list" />
+                            <include layout="@layout/loader_single_item_list" />
+
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
 
                 <TextView
                     android:id="@+id/sellerInfoTitle"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     app:layout_constraintLeft_toLeftOf="parent"
-                    app:layout_constraintTop_toBottomOf="@id/sellerPostsList"
+                    app:layout_constraintTop_toBottomOf="@id/sellerPostsContainer"
                     android:layout_marginTop="@dimen/dimen30"
                     android:textColor="@color/colorBlack"
                     android:text="Información sobre el vendedor"

@@ -33,6 +33,7 @@ object Versions {
     val mockito = "2.+"
     val coreTesting = "2.1.0"
     val truth = "1.0.1"
+    val shimmer = "0.4.0"
 }
 object Dep {
     val kotlinStandardLibrary = "org.jetbrains.kotlin:kotlin-stdlib:${Versions.kotlin}"
@@ -56,7 +57,6 @@ object Dep {
     val koin ="org.koin:koin-android:${Versions.koin}"
     val koinViewModel ="org.koin:koin-androidx-viewmodel:${Versions.koinViewModel}"
     val koinScope ="org.koin:koin-androidx-scope:${Versions.koinScope}"
-    val koinTest ="org.koin:koin-test:${Versions.koinScope}"
     val rxAndroid ="io.reactivex.rxjava2:rxandroid:${Versions.rxAndroid}"
     val rxJava="io.reactivex.rxjava2:rxjava:${Versions.rxJava}"
     val retrofit ="com.squareup.retrofit2:retrofit:${Versions.retrofit}"
@@ -70,5 +70,6 @@ object Dep {
     val mockito ="org.mockito:mockito-core:${Versions.mockito}"
     val coreTesting = "androidx.arch.core:core-testing:${Versions.coreTesting}"
     val truth = "com.google.truth:truth:${Versions.truth}"
+    val shimmer = "com.facebook.shimmer:shimmer:${Versions.shimmer}"
 }
 

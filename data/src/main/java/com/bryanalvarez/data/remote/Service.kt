@@ -1,6 +1,7 @@
 package com.bryanalvarez.data.remote
 
 
+import android.content.Context
 import com.bryanalvarez.data.BuildConfig
 import com.bryanalvarez.data.dto.ItemsListResponse
 import com.bryanalvarez.domain.models.Category
@@ -29,12 +30,15 @@ interface Service{
     fun getItemsBySeller(@Query("seller_id") sellerId: String): Call<SellerInfo>
 
     companion object{
-        private val client = OkHttpClient.Builder().apply {
-            if (BuildConfig.DEBUG) {
-                addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
-            }
-        }.build()
-        fun getService(): Service {
+        fun getService(context: Context): Service {
+
+            val client = OkHttpClient.Builder().apply {
+                if (BuildConfig.DEBUG) {
+                    addInterceptor(HttpLoggingInterceptor().apply { level = HttpLoggingInterceptor.Level.BODY })
+                }
+                addInterceptor(NetworkConnectionInterceptor(context))
+            }.build()
+
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://api.mercadolibre.com/sites/MLC/")
                 .addCallAdapterFactory(RxJava2CallAdapterFactory.create())

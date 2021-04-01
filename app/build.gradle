@@ -51,6 +51,7 @@ dependencies {
     implementation Dep.material
     implementation Dep.recyclerView
     implementation Dep.glide
+    implementation Dep.shimmer
 
     implementation Dep.rxAndroid
 

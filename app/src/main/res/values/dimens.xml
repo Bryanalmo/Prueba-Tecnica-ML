@@ -20,4 +20,6 @@
     <dimen name="dimen8">8dp</dimen>
     <dimen name="dimenSp10">10sp</dimen>
     <dimen name="dimen1">1dp</dimen>
+    <dimen name="dimen150">150dp</dimen>
+    <dimen name="dimen80">80dp</dimen>
 </resources>

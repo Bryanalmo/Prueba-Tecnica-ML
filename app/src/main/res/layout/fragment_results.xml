@@ -15,6 +15,7 @@
     </data>
 
     <androidx.coordinatorlayout.widget.CoordinatorLayout
+        android:id="@+id/resultsContainer"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
@@ -68,9 +69,62 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/resultsList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:visibility="@{vm.loadingItemsList ? View.GONE : View.VISIBLE}"/>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/loaderCategoriesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.loadingItemsList ? View.VISIBLE : View.GONE}"
+                tools:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/loader_single_item_list" />
+                    <include layout="@layout/loader_single_item_list" />
+                    <include layout="@layout/loader_single_item_list" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
+
+        <LinearLayout
+            android:id="@+id/emptyStateResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="@{vm.itemsListIsEmpty ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="@dimen/dimen80"
+                android:layout_height="@dimen/dimen80"
+                android:src="@drawable/ic_search"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimenSp18"
+                android:layout_marginTop="@dimen/dimen15"
+                android:text="No hemos encontrado resultados"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="@dimen/dimenSp18"
+                android:layout_marginVertical="@dimen/dimen5"
+                android:text="Asegurate de que tu busqueda \n esté bien escrita"/>
+
+        </LinearLayout>
 
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>

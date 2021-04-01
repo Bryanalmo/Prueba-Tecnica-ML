@@ -13,7 +13,9 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
                       private val addUserSearch: AddUserSearch): ObservableViewModel() {
 
     private lateinit var userSearchList: MutableLiveData<List<UserSearch>>
-    var recentSearchesError = MutableLiveData<Failure>()
+    var recentSearchesError = MutableLiveData<String>()
+    var loadingUserSearchList = false
+    var userSearchListIsEmpty = false
 
     fun getUserSearchList(): LiveData<List<UserSearch>> {
         userSearchList = MutableLiveData()
@@ -22,14 +24,21 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
     }
 
     private fun getUserSearchListData() {
+        loadingUserSearchList = true
+        notifyChange()
         getUserRecentSearch.execute(null){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    recentSearchesError.postValue(it)
+                    recentSearchesError.postValue(it.exception.localizedMessage)
+                    loadingUserSearchList = false
+                    notifyChange()
                 },{
-                    Log.d("MYLOG", "getUserSearchListData -> $it")
+                    Log.d("MYLOG", "getUserSearchListData (is empty ${it.isEmpty()}) -> $it")
                     userSearchList.postValue(it)
+                    loadingUserSearchList = false
+                    userSearchListIsEmpty = it.isEmpty()
+                    notifyChange()
                 }
             )
         }
@@ -40,7 +49,7 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    recentSearchesError.postValue(it)
+                    recentSearchesError.postValue(it.exception.localizedMessage)
                 },{
                     Log.d("MYLOG", "addUserSearch -> $it")
                 }
