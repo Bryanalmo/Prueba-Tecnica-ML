@@ -1,4 +1,4 @@
-package com.bryanalvarez.mlsearch.koin
+package com.bryanalvarez.mlsearch.di
 
 import com.bryanalvarez.mlsearch.home.HomeViewModel
 import com.bryanalvarez.mlsearch.itemDetail.ItemDetailViewModel

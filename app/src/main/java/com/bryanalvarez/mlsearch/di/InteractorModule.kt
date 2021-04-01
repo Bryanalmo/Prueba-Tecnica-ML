@@ -1,4 +1,4 @@
-package com.bryanalvarez.mlsearch.koin
+package com.bryanalvarez.mlsearch.di
 
 import com.bryanalvarez.domain.interactors.*
 import com.bryanalvarez.domain.repository.Repository
