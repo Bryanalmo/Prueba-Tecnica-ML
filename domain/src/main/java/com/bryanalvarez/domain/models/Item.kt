@@ -29,10 +29,9 @@ data class Item(
     }
 
     fun getConditionTranslate(): String {
-        return if(condition == "new"){
-            "Nuevo"
-        }else{
-            "Usado"
+        return when(condition){
+            "new" -> "Nuevo"
+            else -> "Usado"
         }
     }
 }
