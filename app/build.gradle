@@ -16,6 +16,15 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    testOptions {
+        unitTests.returnDefaultValues = true
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -52,10 +61,23 @@ dependencies {
     implementation Dep.koin
     implementation Dep.koinViewModel
     implementation Dep.koinScope
-    implementation 'androidx.legacy:legacy-support-v4:1.0.0'
 
-    testImplementation Dep.junit
+    androidTestImplementation Dep.junit
     androidTestImplementation Dep.junitExt
     androidTestImplementation Dep.espresso
+    testImplementation Dep.junit
+    testImplementation Dep.junitExt
+    androidTestImplementation Dep.mockito
+    testImplementation Dep.mockito
+    androidTestImplementation Dep.coreTesting
+    testImplementation Dep.coreTesting
+    androidTestImplementation Dep.testCore
+    testImplementation Dep.testCore
+    androidTestImplementation Dep.truth
+    testImplementation Dep.truth
+
+    testImplementation Dep.coroutinesTest
+    androidTestImplementation Dep.coroutinesTest
+
     implementation Dep.paging
 }
