@@ -1,9 +1,9 @@
 package com.bryanalvarez.mlsearch
 
 import android.app.Application
-import com.bryanalvarez.mlsearch.koin.interactorModule
-import com.bryanalvarez.mlsearch.koin.repositoryModule
-import com.bryanalvarez.mlsearch.koin.viewModelModule
+import com.bryanalvarez.mlsearch.di.interactorModule
+import com.bryanalvarez.mlsearch.di.repositoryModule
+import com.bryanalvarez.mlsearch.di.viewModelModule
 import org.koin.android.ext.koin.androidContext
 import org.koin.android.ext.koin.androidLogger
 import org.koin.core.context.startKoin

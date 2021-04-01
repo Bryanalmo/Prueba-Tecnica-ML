@@ -1,4 +1,4 @@
-package com.bryanalvarez.mlsearch.koin
+package com.bryanalvarez.mlsearch.di
 
 import android.content.Context
 import com.bryanalvarez.data.local.MLDataBase

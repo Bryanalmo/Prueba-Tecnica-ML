@@ -30,12 +30,10 @@ dependencies {
     implementation Dep.arrowCore
     implementation Dep.androidxCore
     implementation Dep.appcompat
-    testImplementation Dep.junit
-    androidTestImplementation Dep.junitExt
-    androidTestImplementation Dep.espresso
 
     implementation Dep.coroutinesCore
     implementation Dep.coroutinesAndroid
+    implementation Dep.coroutinesTest
 
     implementation Dep.roomRuntime
 
@@ -43,5 +41,19 @@ dependencies {
     implementation Dep.rxAndroid
     implementation Dep.rxJava
     implementation Dep.paging
+
+    androidTestImplementation Dep.junit
+    androidTestImplementation Dep.junitExt
+    androidTestImplementation Dep.espresso
+    testImplementation Dep.junit
+    testImplementation Dep.junitExt
+    androidTestImplementation Dep.mockito
+    testImplementation Dep.mockito
+    androidTestImplementation Dep.coreTesting
+    testImplementation Dep.coreTesting
+    androidTestImplementation Dep.testCore
+    testImplementation Dep.testCore
+    androidTestImplementation Dep.truth
+    testImplementation Dep.truth
 
 }
