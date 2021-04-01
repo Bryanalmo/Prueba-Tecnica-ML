@@ -19,6 +19,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
     var categorySelected = Category()
     var itemsResultsError = MutableLiveData<String>()
     var loadingItemsList = false
+    var itemsListIsEmpty = false
 
     fun getItemsList(bySearch: Boolean): LiveData<List<Item>>{
         itemsList = MutableLiveData()
@@ -41,6 +42,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
                     Log.d("MYLOG", "items -> $it")
                     itemsList.postValue(it)
                     loadingItemsList = false
+                    itemsListIsEmpty = it.isEmpty()
                     notifyChange()
                 }
             )
@@ -62,6 +64,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
                     Log.d("MYLOG", "items by category -> $it")
                     itemsList.postValue(it)
                     loadingItemsList = false
+                    itemsListIsEmpty = it.isEmpty()
                     notifyChange()
                 }
             )

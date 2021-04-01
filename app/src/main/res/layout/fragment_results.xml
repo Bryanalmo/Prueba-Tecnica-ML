@@ -94,6 +94,38 @@
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
+        <LinearLayout
+            android:id="@+id/emptyStateResults"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:visibility="@{vm.itemsListIsEmpty ? View.VISIBLE : View.GONE}">
+
+            <ImageView
+                android:layout_width="@dimen/dimen80"
+                android:layout_height="@dimen/dimen80"
+                android:src="@drawable/ic_search"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textStyle="bold"
+                android:textSize="@dimen/dimenSp18"
+                android:layout_marginTop="@dimen/dimen15"
+                android:text="No hemos encontrado resultados"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textAlignment="center"
+                android:textSize="@dimen/dimenSp18"
+                android:layout_marginVertical="@dimen/dimen5"
+                android:text="Asegurate de que tu busqueda \n esté bien escrita"/>
+
+        </LinearLayout>
+
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 

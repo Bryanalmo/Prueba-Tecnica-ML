@@ -15,6 +15,7 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
     private lateinit var userSearchList: MutableLiveData<List<UserSearch>>
     var recentSearchesError = MutableLiveData<String>()
     var loadingUserSearchList = false
+    var userSearchListIsEmpty = false
 
     fun getUserSearchList(): LiveData<List<UserSearch>> {
         userSearchList = MutableLiveData()
@@ -33,9 +34,10 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
                     loadingUserSearchList = false
                     notifyChange()
                 },{
-                    Log.d("MYLOG", "getUserSearchListData -> $it")
+                    Log.d("MYLOG", "getUserSearchListData (is empty ${it.isEmpty()}) -> $it")
                     userSearchList.postValue(it)
                     loadingUserSearchList = false
+                    userSearchListIsEmpty = it.isEmpty()
                     notifyChange()
                 }
             )

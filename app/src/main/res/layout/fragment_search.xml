@@ -86,6 +86,29 @@
                 </LinearLayout>
             </com.facebook.shimmer.ShimmerFrameLayout>
 
+            <LinearLayout
+                android:id="@+id/emptyStateSearch"
+                android:visibility="@{vm.userSearchListIsEmpty ? View.VISIBLE : View.GONE}"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+                android:gravity="center">
+
+                <ImageView
+                    android:layout_width="@dimen/dimen80"
+                    android:layout_height="@dimen/dimen80"
+                    android:src="@drawable/ic_history"/>
+
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:textAlignment="center"
+                    android:textSize="@dimen/dimenSp18"
+                    android:layout_marginVertical="@dimen/dimen15"
+                    android:text="Tu historial de busquedas \n está vacío"/>
+
+            </LinearLayout>
+
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
