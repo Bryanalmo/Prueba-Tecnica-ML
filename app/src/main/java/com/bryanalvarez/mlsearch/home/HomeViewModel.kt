@@ -11,6 +11,7 @@ import com.bryanalvarez.mlsearch.core.ObservableViewModel
 class HomeViewModel(private val getCategories: GetCategories): ObservableViewModel() {
 
     private lateinit var categoriesList: MutableLiveData<List<Category>>
+    var loadingCategories = false
     var categoryError = MutableLiveData<Failure>()
 
     fun getCategories(): LiveData<List<Category>> {
@@ -20,18 +21,20 @@ class HomeViewModel(private val getCategories: GetCategories): ObservableViewMod
     }
 
     private fun getCategoriesData() {
+        loadingCategories = true
+        notifyChange()
         getCategories.execute(null){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     categoryError.postValue(it)
+                    loadingCategories = false
+                    notifyChange()
                 },{
                     Log.d("MYLOG", "categories -> $it")
-                    try{
-                        categoriesList.postValue(it.subList(0,8))
-                    }catch (e: Exception){
-                        categoriesList.postValue(it)
-                    }
+                    categoriesList.postValue(it)
+                    loadingCategories = false
+                    notifyChange()
                 }
             )
         }

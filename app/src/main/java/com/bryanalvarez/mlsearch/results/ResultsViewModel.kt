@@ -18,6 +18,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
     var searchText: String = ""
     var categorySelected = Category()
     var itemsResultsError = MutableLiveData<Failure>()
+    var loadingItemsList = false
 
     fun getItemsList(bySearch: Boolean): LiveData<List<Item>>{
         itemsList = MutableLiveData()
@@ -26,30 +27,42 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
     }
 
     private fun getItemsBySearchData() {
+        loadingItemsList = true
+        notifyChange()
         val params = GetItemsBySearch.Params(searchText)
         getItemsBySearch.execute(params){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     itemsResultsError.postValue(it)
+                    loadingItemsList = false
+                    notifyChange()
                 },{
                     Log.d("MYLOG", "items -> $it")
                     itemsList.postValue(it)
+                    loadingItemsList = false
+                    notifyChange()
                 }
             )
         }
     }
 
     private fun getItemsByCategoryData() {
+        loadingItemsList = true
+        notifyChange()
         val params = GetItemsByCategory.Params(categorySelected.id!!)
         getItemsByCategory.execute(params){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     itemsResultsError.postValue(it)
+                    loadingItemsList = false
+                    notifyChange()
                 },{
                     Log.d("MYLOG", "items by category -> $it")
                     itemsList.postValue(it)
+                    loadingItemsList = false
+                    notifyChange()
                 }
             )
         }

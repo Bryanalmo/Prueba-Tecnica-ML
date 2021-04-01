@@ -14,6 +14,7 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
 
     private lateinit var userSearchList: MutableLiveData<List<UserSearch>>
     var recentSearchesError = MutableLiveData<Failure>()
+    var loadingUserSearchList = false
 
     fun getUserSearchList(): LiveData<List<UserSearch>> {
         userSearchList = MutableLiveData()
@@ -22,14 +23,20 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
     }
 
     private fun getUserSearchListData() {
+        loadingUserSearchList = true
+        notifyChange()
         getUserRecentSearch.execute(null){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     recentSearchesError.postValue(it)
+                    loadingUserSearchList = false
+                    notifyChange()
                 },{
                     Log.d("MYLOG", "getUserSearchListData -> $it")
                     userSearchList.postValue(it)
+                    loadingUserSearchList = false
+                    notifyChange()
                 }
             )
         }

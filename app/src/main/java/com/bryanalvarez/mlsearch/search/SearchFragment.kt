@@ -11,16 +11,19 @@ import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import androidx.core.content.ContextCompat
+import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bryanalvarez.mlsearch.R
+import com.bryanalvarez.mlsearch.databinding.FragmentSearchBinding
 import kotlinx.android.synthetic.main.fragment_search.*
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class SearchFragment : DialogFragment() {
 
+    private lateinit var binding: FragmentSearchBinding
     private val viewModel: SearchViewModel by viewModel<SearchViewModel>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -32,8 +35,10 @@ class SearchFragment : DialogFragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_search, container, false)
+        binding = DataBindingUtil.inflate(inflater, R.layout.fragment_search, container, false)
+        binding.lifecycleOwner = this
+        binding.vm = viewModel
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {

@@ -68,7 +68,28 @@
             <androidx.recyclerview.widget.RecyclerView
                 android:id="@+id/resultsList"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"/>
+                android:layout_height="match_parent"
+                android:visibility="@{vm.loadingItemsList ? View.GONE : View.VISIBLE}"/>
+
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/loaderCategoriesList"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:visibility="@{vm.loadingItemsList ? View.VISIBLE : View.GONE}"
+                tools:visibility="visible"
+                app:layout_constraintTop_toTopOf="parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <include layout="@layout/loader_single_item_list" />
+                    <include layout="@layout/loader_single_item_list" />
+                    <include layout="@layout/loader_single_item_list" />
+
+                </LinearLayout>
+            </com.facebook.shimmer.ShimmerFrameLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
