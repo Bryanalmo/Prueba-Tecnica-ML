@@ -17,7 +17,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
     private lateinit var itemsList: MutableLiveData<List<Item>>
     var searchText: String = ""
     var categorySelected = Category()
-    var itemsResultsError = MutableLiveData<Failure>()
+    var itemsResultsError = MutableLiveData<String>()
     var loadingItemsList = false
 
     fun getItemsList(bySearch: Boolean): LiveData<List<Item>>{
@@ -34,7 +34,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    itemsResultsError.postValue(it)
+                    itemsResultsError.postValue(it.exception.localizedMessage)
                     loadingItemsList = false
                     notifyChange()
                 },{
@@ -55,7 +55,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    itemsResultsError.postValue(it)
+                    itemsResultsError.postValue(it.exception.localizedMessage)
                     loadingItemsList = false
                     notifyChange()
                 },{

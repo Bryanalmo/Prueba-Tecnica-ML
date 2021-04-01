@@ -12,7 +12,7 @@ class HomeViewModel(private val getCategories: GetCategories): ObservableViewMod
 
     private lateinit var categoriesList: MutableLiveData<List<Category>>
     var loadingCategories = false
-    var categoryError = MutableLiveData<Failure>()
+    var categoryError = MutableLiveData<String>()
 
     fun getCategories(): LiveData<List<Category>> {
         categoriesList = MutableLiveData()
@@ -27,7 +27,7 @@ class HomeViewModel(private val getCategories: GetCategories): ObservableViewMod
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    categoryError.postValue(it)
+                    categoryError.postValue(it.exception.localizedMessage)
                     loadingCategories = false
                     notifyChange()
                 },{

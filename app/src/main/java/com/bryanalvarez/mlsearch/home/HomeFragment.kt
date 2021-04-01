@@ -10,6 +10,7 @@ import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bryanalvarez.domain.models.Category
+import com.bryanalvarez.mlsearch.MainActivity
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentHomeBinding
 import kotlinx.android.synthetic.main.fragment_home.*
@@ -38,6 +39,10 @@ class HomeFragment : Fragment() {
         search.setOnClickListener {
             findNavController().navigate(R.id.action_homeFragment_to_searchFragment)
         }
+
+        viewModel.categoryError.observe(this, Observer {
+            (activity as MainActivity).showError(homeContainer,it)
+        })
     }
 
     private fun setupCategories() {

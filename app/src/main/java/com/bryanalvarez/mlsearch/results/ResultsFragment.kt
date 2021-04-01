@@ -13,6 +13,7 @@ import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.domain.models.Item
+import com.bryanalvarez.mlsearch.MainActivity
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentResultsBinding
 import kotlinx.android.synthetic.main.fragment_results.*
@@ -46,10 +47,15 @@ class ResultsFragment : Fragment() {
             setupItemList(false)
         }
 
+        viewModel.notifyChange()
+
         searchResults.setOnClickListener {
             findNavController().navigate(R.id.searchFragment)
         }
-        viewModel.notifyChange()
+
+        viewModel.itemsResultsError.observe(this, Observer {
+            (activity as MainActivity).showError(resultsContainer,it)
+        })
     }
 
     private fun setupItemList(bySearch: Boolean){

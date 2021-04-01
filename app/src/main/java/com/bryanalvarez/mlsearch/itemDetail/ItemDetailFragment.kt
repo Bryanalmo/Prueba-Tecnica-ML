@@ -14,6 +14,7 @@ import androidx.lifecycle.Observer
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bryanalvarez.domain.models.Item
+import com.bryanalvarez.mlsearch.MainActivity
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentItemDetailBinding
 import com.bryanalvarez.mlsearch.results.ResultsAdapter
@@ -66,6 +67,10 @@ class ItemDetailFragment : DialogFragment() {
                 startActivity(intent)
             }
         }
+
+        viewModel.itemBySellerError.observe(this, Observer {
+            (activity as MainActivity).showError(itemDetailContainer,it)
+        })
 
     }
 

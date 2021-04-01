@@ -16,6 +16,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bryanalvarez.mlsearch.MainActivity
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentSearchBinding
 import kotlinx.android.synthetic.main.fragment_search.*
@@ -62,6 +63,10 @@ class SearchFragment : DialogFragment() {
             }
             false
         }
+
+        viewModel.recentSearchesError.observe(this, Observer {
+            (activity as MainActivity).showError(searchContainer,it)
+        })
     }
 
     private fun setupRecentSearch() {

@@ -14,7 +14,7 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
     private lateinit var itemsList: MutableLiveData<List<Item>>
     var itemSelected = Item()
     var seller: Seller = Seller()
-    var itemBySellerError = MutableLiveData<Failure>()
+    var itemBySellerError = MutableLiveData<String>()
     var loadingItemsList = false
 
     fun getItemsBySeller(item: Item): LiveData<List<Item>> {
@@ -33,7 +33,7 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    itemBySellerError.postValue(it)
+                    itemBySellerError.postValue(it.exception.localizedMessage)
                     loadingItemsList = false
                     notifyChange()
                 },{

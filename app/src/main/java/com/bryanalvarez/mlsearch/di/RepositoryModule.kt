@@ -13,11 +13,11 @@ val repositoryModule = module {
     fun provideRepository(
         service: Service,
         userSearchRepository: UserSearchRepository): Repository = AppRepository(service, userSearchRepository)
-    fun provideService(): Service = Service.getService()
+    fun provideService(context: Context): Service = Service.getService(context)
     fun provideUserSearchRepository(context: Context): UserSearchRepository = UserSearchRepository(
         MLDataBase.getDatabase(context).userSearchDao())
 
     single { provideRepository(get(), get()) }
-    single { provideService() }
+    single { provideService(get()) }
     single { provideUserSearchRepository( get()) }
 }

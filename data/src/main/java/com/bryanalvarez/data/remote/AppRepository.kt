@@ -72,7 +72,7 @@ class AppRepository(private val service: Service,
             if(code == 200 && response.isSuccessful && data != null){
                 Right(data)
             }else{
-                Left(Failure(Throwable()))
+                Left(Failure(Throwable("Parece que no tienes internet, intentalo nuevamente")))
             }
         }catch (ex: JSONException) {
             Log.d("MYLOG", "getCategories ERROR JSON -> ${ex.localizedMessage}")

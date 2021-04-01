@@ -13,7 +13,7 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
                       private val addUserSearch: AddUserSearch): ObservableViewModel() {
 
     private lateinit var userSearchList: MutableLiveData<List<UserSearch>>
-    var recentSearchesError = MutableLiveData<Failure>()
+    var recentSearchesError = MutableLiveData<String>()
     var loadingUserSearchList = false
 
     fun getUserSearchList(): LiveData<List<UserSearch>> {
@@ -29,7 +29,7 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    recentSearchesError.postValue(it)
+                    recentSearchesError.postValue(it.exception.localizedMessage)
                     loadingUserSearchList = false
                     notifyChange()
                 },{
@@ -47,7 +47,7 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
-                    recentSearchesError.postValue(it)
+                    recentSearchesError.postValue(it.exception.localizedMessage)
                 },{
                     Log.d("MYLOG", "addUserSearch -> $it")
                 }
