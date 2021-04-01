@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
+import arrow.core.Failure
 import com.bryanalvarez.domain.interactors.GetItemsByCategory
 import com.bryanalvarez.domain.interactors.GetItemsBySearch
 import com.bryanalvarez.domain.models.Category
@@ -16,6 +17,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
     private lateinit var itemsList: MutableLiveData<List<Item>>
     var searchText: String = ""
     var categorySelected = Category()
+    var itemsResultsError = MutableLiveData<Failure>()
 
     fun getItemsList(bySearch: Boolean): LiveData<List<Item>>{
         itemsList = MutableLiveData()
@@ -29,6 +31,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
+                    itemsResultsError.postValue(it)
                 },{
                     Log.d("MYLOG", "items -> $it")
                     itemsList.postValue(it)
@@ -43,6 +46,7 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
+                    itemsResultsError.postValue(it)
                 },{
                     Log.d("MYLOG", "items by category -> $it")
                     itemsList.postValue(it)
