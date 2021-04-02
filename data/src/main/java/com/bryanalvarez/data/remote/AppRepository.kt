@@ -6,10 +6,8 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.bryanalvarez.data.local.repository.UserSearchRepository
-import com.bryanalvarez.domain.models.Category
-import com.bryanalvarez.domain.models.Item
-import com.bryanalvarez.domain.models.SellerInfo
-import com.bryanalvarez.domain.models.UserSearch
+import com.bryanalvarez.domain.constants.PAGE_LIMIT
+import com.bryanalvarez.domain.models.*
 import com.bryanalvarez.domain.repository.Repository
 import org.json.JSONException
 import java.lang.Exception
@@ -17,13 +15,13 @@ import java.lang.Exception
 class AppRepository(private val service: Service,
                     private val userSearchRepository: UserSearchRepository): Repository {
 
-    override suspend fun getItemsBySearch(text: String): Either<Failure, List<Item>> {
+    override suspend fun getItemsBySearch(text: String, offset: Int): Either<Failure, ItemsListInfo> {
         return try{
-            val response = service.getItemsBySearch(text, 50, 0).execute()
+            val response = service.getItemsBySearch(text, PAGE_LIMIT, offset).execute()
             val data = response.body()
             val code = response.code()
             if(code == 200 && response.isSuccessful && data != null){
-                Right(data.results)
+                Right(data)
             }else{
                 Left(Failure(Throwable()))
             }
@@ -83,13 +81,13 @@ class AppRepository(private val service: Service,
         }
     }
 
-    override suspend fun getItemsByCategory(categoryId: String): Either<Failure, List<Item>> {
+    override suspend fun getItemsByCategory(categoryId: String, offset: Int): Either<Failure, ItemsListInfo> {
         return try{
-            val response = service.getItemsByCategory(categoryId).execute()
+            val response = service.getItemsByCategory(categoryId, PAGE_LIMIT, offset).execute()
             val data = response.body()
             val code = response.code()
             if(code == 200 && response.isSuccessful && data != null){
-                Right(data.results)
+                Right(data)
             }else{
                 Left(Failure(Throwable()))
             }

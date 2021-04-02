@@ -2,13 +2,10 @@ package com.bryanalvarez.domain.repository
 
 import arrow.core.Either
 import arrow.core.Failure
-import com.bryanalvarez.domain.models.Category
-import com.bryanalvarez.domain.models.Item
-import com.bryanalvarez.domain.models.SellerInfo
-import com.bryanalvarez.domain.models.UserSearch
+import com.bryanalvarez.domain.models.*
 
 interface Repository {
-    suspend fun getItemsBySearch(text: String): Either<Failure, List<Item>>
+    suspend fun getItemsBySearch(text: String, offset: Int): Either<Failure, ItemsListInfo>
 
     suspend fun getUserRecentSearch(): Either<Failure, List<UserSearch>>
 
@@ -16,7 +13,7 @@ interface Repository {
 
     suspend fun getCategories(): Either<Failure, List<Category>>
 
-    suspend fun getItemsByCategory(categoryId: String): Either<Failure, List<Item>>
+    suspend fun getItemsByCategory(categoryId: String, offset: Int): Either<Failure, ItemsListInfo>
 
     suspend fun getItemsBySeller(sellerId: String): Either<Failure, SellerInfo>
 }

@@ -20,15 +20,19 @@ class AppMockedRepository: Repository {
 
     fun setShouldReturnError(value: Boolean){ shouldReturnError = value }
 
-    override suspend fun getItemsBySearch(text: String): Either<Failure, List<Item>> {
+    override suspend fun getItemsBySearch(text: String, offset: Int): Either<Failure, ItemsListInfo> {
         return try {
             if(!shouldReturnError && text.isNotEmpty()){
-                Right(itemsList.filter { item -> item.title!!.contains(text, true) })
+                var itemsListFiltered = itemsList.filter { item -> item.title!!.contains(text, true) }
+                Right(ItemsListInfo(
+                    Paging(0,50),
+                    itemsListFiltered.toMutableList()
+                ))
             }else{
-                Left(Failure(Throwable()))
+                Left(Failure(Throwable("")))
             }
         }catch (e: Exception){
-            Left(Failure(Throwable()))
+            Left(Failure(Throwable(e.localizedMessage)))
         }
     }
 
@@ -37,10 +41,10 @@ class AppMockedRepository: Repository {
             if(!shouldReturnError){
                 Right(recentSearchesList)
             }else{
-                Left(Failure(Throwable()))
+                Left(Failure(Throwable("")))
             }
         }catch (e: Exception){
-            Left(Failure(Throwable()))
+            Left(Failure(Throwable(e.localizedMessage)))
         }
     }
 
@@ -62,22 +66,25 @@ class AppMockedRepository: Repository {
             if(!shouldReturnError){
                 Right(categoriesList)
             }else{
-                Left(Failure(Throwable()))
+                Left(Failure(Throwable("")))
             }
         }catch (e: Exception){
-            Left(Failure(Throwable()))
+            Left(Failure(Throwable(e.localizedMessage)))
         }
     }
 
-    override suspend fun getItemsByCategory(categoryId: String): Either<Failure, List<Item>> {
+    override suspend fun getItemsByCategory(categoryId: String, offset: Int): Either<Failure, ItemsListInfo> {
         return try {
             if(!shouldReturnError && categoryId.isNotEmpty()){
-                Right(itemsList)
+                Right(ItemsListInfo(
+                    Paging(0,50),
+                    itemsList
+                ))
             }else{
-                Left(Failure(Throwable()))
+                Left(Failure(Throwable("")))
             }
         }catch (e: Exception){
-            Left(Failure(Throwable()))
+            Left(Failure(Throwable(e.localizedMessage)))
         }
     }
 
@@ -89,10 +96,10 @@ class AppMockedRepository: Repository {
                     itemsList.filter { item -> item.seller?.id == sellerId }
                 ))
             }else{
-                Left(Failure(Throwable()))
+                Left(Failure(Throwable("")))
             }
         }catch (e: Exception){
-            Left(Failure(Throwable()))
+            Left(Failure(Throwable(e.localizedMessage)))
         }
     }
 

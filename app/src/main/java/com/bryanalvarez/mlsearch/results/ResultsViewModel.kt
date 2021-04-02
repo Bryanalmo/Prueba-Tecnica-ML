@@ -3,69 +3,90 @@ package com.bryanalvarez.mlsearch.results
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.viewModelScope
-import arrow.core.Failure
+import com.bryanalvarez.domain.constants.PAGE_LIMIT
 import com.bryanalvarez.domain.interactors.GetItemsByCategory
 import com.bryanalvarez.domain.interactors.GetItemsBySearch
 import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.domain.models.Item
+import com.bryanalvarez.domain.models.ItemsListInfo
 import com.bryanalvarez.mlsearch.core.ObservableViewModel
 
 class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
                        private val getItemsByCategory: GetItemsByCategory): ObservableViewModel() {
 
-    private lateinit var itemsList: MutableLiveData<List<Item>>
+    private lateinit var itemsList: MutableLiveData<MutableList<Item>>
+    var itemsListInfo: ItemsListInfo? = null
     var searchText: String = ""
     var categorySelected = Category()
     var itemsResultsError = MutableLiveData<String>()
     var loadingItemsList = false
+    var loadingPagingItemsList = false
     var itemsListIsEmpty = false
+    var currentOffset = 0
+    var bySearch = false
+    var isLastPage = false
 
-    fun getItemsList(bySearch: Boolean): LiveData<List<Item>>{
-        itemsList = MutableLiveData()
+    fun getItemsList(): LiveData<MutableList<Item>>{
+        if(!::itemsList.isInitialized){
+            itemsList = MutableLiveData()
+        }
         if(bySearch) getItemsBySearchData() else getItemsByCategoryData()
         return itemsList
     }
 
     private fun getItemsBySearchData() {
-        loadingItemsList = true
-        notifyChange()
-        val params = GetItemsBySearch.Params(searchText)
+        enableDesableLoading(true)
+        val params = GetItemsBySearch.Params(searchText, currentOffset)
         getItemsBySearch.execute(params){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     itemsResultsError.postValue(it.exception.localizedMessage)
-                    loadingItemsList = false
-                    notifyChange()
+                    enableDesableLoading(false)
                 },{
                     Log.d("MYLOG", "items -> $it")
-                    itemsList.postValue(it)
-                    loadingItemsList = false
-                    itemsListIsEmpty = it.isEmpty()
-                    notifyChange()
+                    handleItemListResponse(it)
                 }
             )
         }
     }
 
-    private fun getItemsByCategoryData() {
-        loadingItemsList = true
+    private fun enableDesableLoading(loading: Boolean){
+        if(itemsListInfo == null){
+            loadingItemsList = loading
+        }else{
+            loadingPagingItemsList = loading
+        }
         notifyChange()
-        val params = GetItemsByCategory.Params(categorySelected.id!!)
+    }
+
+    private fun handleItemListResponse(responseInfo: ItemsListInfo){
+        currentOffset = responseInfo.paging.offset + PAGE_LIMIT
+        enableDesableLoading(false)
+        if(itemsListInfo == null){
+            itemsListInfo = responseInfo
+            itemsList.postValue(responseInfo.results)
+            itemsListIsEmpty = responseInfo.results.isEmpty()
+        }else{
+            var updatedItems = itemsList.value
+            updatedItems?.addAll(responseInfo.results)
+            itemsList.postValue(updatedItems ?: mutableListOf())
+            isLastPage = responseInfo.results.isEmpty()
+        }
+    }
+
+    private fun getItemsByCategoryData() {
+        enableDesableLoading(true)
+        val params = GetItemsByCategory.Params(categorySelected.id!!, currentOffset)
         getItemsByCategory.execute(params){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     itemsResultsError.postValue(it.exception.localizedMessage)
-                    loadingItemsList = false
-                    notifyChange()
+                    enableDesableLoading(false)
                 },{
                     Log.d("MYLOG", "items by category -> $it")
-                    itemsList.postValue(it)
-                    loadingItemsList = false
-                    itemsListIsEmpty = it.isEmpty()
-                    notifyChange()
+                    handleItemListResponse(it)
                 }
             )
         }
