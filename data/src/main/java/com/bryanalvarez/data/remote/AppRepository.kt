@@ -15,6 +15,11 @@ import java.lang.Exception
 class AppRepository(private val service: Service,
                     private val userSearchRepository: UserSearchRepository): Repository {
 
+    /**
+     * function to get the items by search from the Retrofit service
+     * @param text search typed by the user
+     * @param offset current item indicator
+     */
     override suspend fun getItemsBySearch(text: String, offset: Int): Either<Failure, ItemsListInfo> {
         return try{
             val response = service.getItemsBySearch(text, PAGE_LIMIT, offset).execute()
@@ -34,6 +39,9 @@ class AppRepository(private val service: Service,
         }
     }
 
+    /**
+     * function to get the user searches from the local database
+     */
     override suspend fun getUserRecentSearch(): Either<Failure, List<UserSearch>> {
         return try{
             val data = userSearchRepository.getUserSearchList()
@@ -48,6 +56,10 @@ class AppRepository(private val service: Service,
         }
     }
 
+    /**
+     * function to insert a new user search in the local database
+     * @param text search typed by the user
+     */
     override suspend fun addUserSearch(text: String): Either<Failure, Boolean> {
         return try{
             val data = userSearchRepository.insertItem(UserSearch(textSearched = text))
@@ -62,6 +74,9 @@ class AppRepository(private val service: Service,
         }
     }
 
+    /**
+     * function to get the categories list from the Retrofit service
+     */
     override suspend fun getCategories(): Either<Failure, List<Category>> {
         return try{
             val response = service.getCategories().execute()
@@ -81,6 +96,11 @@ class AppRepository(private val service: Service,
         }
     }
 
+    /**
+     * function to get items by category from the Retrofit service
+     * @param categoryId category id selected by the user
+     * @param offset current item indicator
+     */
     override suspend fun getItemsByCategory(categoryId: String, offset: Int): Either<Failure, ItemsListInfo> {
         return try{
             val response = service.getItemsByCategory(categoryId, PAGE_LIMIT, offset).execute()
@@ -100,6 +120,10 @@ class AppRepository(private val service: Service,
         }
     }
 
+    /**
+     * function to get the items list by seller from the Retrofit service
+     * @param sellerId seller id from the item selected by the user
+     */
     override suspend fun getItemsBySeller(sellerId: String): Either<Failure, SellerInfo> {
         return try{
             val response = service.getItemsBySeller(sellerId).execute()

@@ -14,6 +14,9 @@ class GetItemsBySeller(private val repository: Repository):
         val sellerId: String?
     ) : UseCase.Input
 
+    /**
+     * override function to call the repository in the coroutine
+     */
     override suspend fun run(parameter: Params?): Either<Failure, SellerInfo> {
         repository.getItemsBySeller(parameter?.sellerId!!).fold(
             {

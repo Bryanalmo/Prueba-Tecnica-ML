@@ -40,19 +40,7 @@ class ResultsFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        arguments?.getString("searchText")?.let {
-            viewModel.searchText = it
-            viewModel.bySearch = true
-            setupItemList()
-        }
-
-        arguments?.getSerializable("category")?.let {
-            viewModel.categorySelected = it as Category
-            viewModel.bySearch = false
-            setupItemList()
-        }
-
-        viewModel.notifyChange()
+        handleArguments()
 
         searchResults.setOnClickListener {
             findNavController().navigate(R.id.searchFragment)
@@ -63,6 +51,29 @@ class ResultsFragment : Fragment() {
         })
     }
 
+    /**
+     * function to receive the arguments sent
+     * if the searchText is sent it will setup the searchText var in the viewModel and setup the items list
+     * if the category is sent it will setup the category var in the viewModel and setup the items list
+     */
+    private fun handleArguments(){
+        arguments?.getString("searchText")?.let {
+            viewModel.searchText = it
+            viewModel.bySearch = true
+            setupItemList()
+        }
+        arguments?.getSerializable("category")?.let {
+            viewModel.categorySelected = it as Category
+            viewModel.bySearch = false
+            setupItemList()
+        }
+        viewModel.notifyChange()
+    }
+
+    /**
+     * function to setup the items list
+     * instantiate the ResultsAdapter and observes the list from the viewModel
+     */
     private fun setupItemList(){
         val adapter = ResultsAdapter{ item ->
             goToItemDetail(item)
@@ -84,16 +95,26 @@ class ResultsFragment : Fragment() {
         })
     }
 
+    /**
+     * function to redirect the user to the item detail screen, it pass the item selected as an argument
+     * @param item item selected to be explored
+     */
     private fun goToItemDetail(item: Item) {
         var args = Bundle()
         args.putSerializable("itemSelected", item)
         findNavController().navigate(R.id.action_resultsFragment_to_itemDetailFragment, args)
     }
 
-    var isLoading = false
     var isScrolling = false
-
     private val scrollListener = object: RecyclerView.OnScrollListener(){
+
+        /**
+         * function to know if the viewModel should bring more items
+         * isNotLoadingAndNotLastPage = checks if the items are not loading and it isn't the las page
+         * isAtLastItem = checks if the user scrolled to the last item
+         * isNotAtBeginning = checks that the first item is not visible
+         * shouldPaginate = based ont the other variables determines if the viewModel should bring more items
+         */
         override fun onScrolled(recyclerView: RecyclerView, dx: Int, dy: Int) {
             super.onScrolled(recyclerView, dx, dy)
             val layoutManager = recyclerView.layoutManager as LinearLayoutManager
@@ -101,13 +122,12 @@ class ResultsFragment : Fragment() {
             val visibleItemCount = layoutManager.childCount
             val totalItemCount = layoutManager.itemCount
 
-            val isNotLoadingAndNotLastPage = !isLoading && !viewModel.isLastPage
+            val isNotLoadingAndNotLastPage = !viewModel.loadingPagingItemsList && !viewModel.isLastPage
             val isAtLastItem = firstVisibleItemPosition + visibleItemCount >= totalItemCount
             val isNotAtBeginning = firstVisibleItemPosition >= 0
-            val isTotalMoreThanVisible = totalItemCount >= PAGE_LIMIT - 2
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
-                    isTotalMoreThanVisible && isScrolling
-            if(shouldPaginate && !viewModel.loadingPagingItemsList) {
+                     isScrolling
+            if(shouldPaginate) {
                 viewModel.getItemsList()
                 isScrolling = false
             }

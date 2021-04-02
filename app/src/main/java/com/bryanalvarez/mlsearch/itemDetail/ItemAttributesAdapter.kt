@@ -12,10 +12,17 @@ import com.bryanalvarez.mlsearch.databinding.SingleItemAttributeBinding
 import com.bryanalvarez.mlsearch.databinding.SingleItemListBinding
 import com.bumptech.glide.Glide
 
+/**
+ * Adapter to specify how to display each item attribute
+ */
 class ItemAttributesAdapter : RecyclerView.Adapter<ItemAttributesAdapter.ItemAttributesViewHolder>() {
 
     private val list = mutableListOf<Attribute>()
 
+    /**
+     * function to update the list after the adapter is initialized
+     * @param newList the list updated
+     */
     fun updateList(newList: List<Attribute>) {
         list.clear()
         list.addAll(newList)
@@ -42,6 +49,10 @@ class ItemAttributesAdapter : RecyclerView.Adapter<ItemAttributesAdapter.ItemAtt
     inner class ItemAttributesViewHolder(private val binding: SingleItemAttributeBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * function to bind the attribute info into the view
+         * @param attribute attribute to be displayed
+         */
         fun bind(attribute: Attribute) {
             binding.attribute = attribute
             binding.executePendingBindings()

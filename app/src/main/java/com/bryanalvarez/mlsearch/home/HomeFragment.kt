@@ -44,7 +44,10 @@ class HomeFragment : Fragment() {
             (activity as MainActivity).showError(homeContainer,it)
         })
     }
-
+    /**
+     * function to setup the categories list
+     * instantiate the CategoriesAdapter and observes the list from the viewModel
+     */
     private fun setupCategories() {
         val adapter = CategoriesAdapter{ category ->
             goToResultsByCategory(category)
@@ -60,6 +63,10 @@ class HomeFragment : Fragment() {
         })
     }
 
+    /**
+     * function to redirect the user to the results screen, it pass the category selected as an argument
+     * @param category category selected to be explored
+     */
     private fun goToResultsByCategory(category: Category){
         val bundle = Bundle()
         bundle.putSerializable("category", category)

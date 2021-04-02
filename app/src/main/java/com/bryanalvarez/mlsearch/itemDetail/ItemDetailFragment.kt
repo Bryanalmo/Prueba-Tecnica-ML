@@ -48,10 +48,7 @@ class ItemDetailFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toolBarItemDetail.navigationIcon= ContextCompat.getDrawable(view.context, R.drawable.ic_back)
-            toolBarItemDetail.setNavigationOnClickListener{
-                dismiss()
-            }
+            setupToolBar(view)
         }
 
         arguments?.getSerializable("itemSelected")?.let {item ->
@@ -62,9 +59,7 @@ class ItemDetailFragment : DialogFragment() {
                 .into(itemImage)
 
             sellerNameText.setOnClickListener {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.data = Uri.parse(viewModel.seller.permalink)
-                startActivity(intent)
+                goToSellerProfile()
             }
         }
 
@@ -74,6 +69,21 @@ class ItemDetailFragment : DialogFragment() {
 
     }
 
+    /**
+     * function to set the toolbar's navigation icon and onclick listener
+     */
+    private fun setupToolBar(view: View){
+        toolBarItemDetail.navigationIcon= ContextCompat.getDrawable(view.context, R.drawable.ic_back)
+        toolBarItemDetail.setNavigationOnClickListener{
+            dismiss()
+        }
+    }
+
+    /**
+     * function to setup the item attributes list
+     * instantiate the ItemAttributesAdapter and set the list from the item selected
+     * @param item item selected
+     */
     private fun setupItemAttributes(item: Item) {
         val adapter = ItemAttributesAdapter()
         itemInfoList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
@@ -84,6 +94,10 @@ class ItemDetailFragment : DialogFragment() {
         }
     }
 
+    /**
+     * function to setup the seller posts list
+     * instantiate the ResultsAdapter and observes the list from the viewModel
+     */
     private fun setupSellerPostsList(item: Item) {
         val adapter = ResultsAdapter{ item ->
 
@@ -102,5 +116,14 @@ class ItemDetailFragment : DialogFragment() {
                 adapter.updateList(it)
             }
         })
+    }
+
+    /**
+     * function to redirect the user to the seller profile in the browser
+     */
+    private fun goToSellerProfile(){
+        val intent = Intent(Intent.ACTION_VIEW)
+        intent.data = Uri.parse(viewModel.seller.permalink)
+        startActivity(intent)
     }
 }

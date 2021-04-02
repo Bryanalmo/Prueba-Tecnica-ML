@@ -8,11 +8,18 @@ import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.SingleCategoryBinding
 
+/**
+ * Adapter to specify how to display each category
+ */
 class CategoriesAdapter(private val onItemClick: (category: Category) -> Unit) :
     RecyclerView.Adapter<CategoriesAdapter.CategoriesViewHolder>() {
 
     private val list = mutableListOf<Category>()
 
+    /**
+     * function to update the list after the adapter is initialized
+     * @param newList the list updated
+     */
     fun updateList(newList: List<Category>) {
         list.clear()
         list.addAll(newList)
@@ -39,6 +46,10 @@ class CategoriesAdapter(private val onItemClick: (category: Category) -> Unit) :
     inner class CategoriesViewHolder(private val binding: SingleCategoryBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * function to bind the category info into the view
+         * @param category category to be displayed
+         */
         fun bind(category: Category) {
             binding.category = category
             binding.root.setOnClickListener { onItemClick(category) }

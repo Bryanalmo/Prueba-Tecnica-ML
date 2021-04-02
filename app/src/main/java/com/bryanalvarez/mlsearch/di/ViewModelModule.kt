@@ -6,7 +6,9 @@ import com.bryanalvarez.mlsearch.results.ResultsViewModel
 import com.bryanalvarez.mlsearch.search.SearchViewModel
 import org.koin.androidx.viewmodel.dsl.viewModel
 import org.koin.dsl.module
-
+/**
+ * module that contains and provides all the viewModels
+ */
 val viewModelModule = module {
     viewModel { ResultsViewModel(get(), get()) }
     viewModel { SearchViewModel(get(), get()) }

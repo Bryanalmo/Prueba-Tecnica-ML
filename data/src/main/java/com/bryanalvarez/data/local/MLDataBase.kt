@@ -16,6 +16,9 @@ abstract class MLDataBase: RoomDatabase() {
         @Volatile
         private var INSTANCE: MLDataBase? = null
 
+        /**
+         * singleton function to return the database instance
+         */
         fun getDatabase(context: Context): MLDataBase {
             val tempInstance = INSTANCE
             if (tempInstance != null) {

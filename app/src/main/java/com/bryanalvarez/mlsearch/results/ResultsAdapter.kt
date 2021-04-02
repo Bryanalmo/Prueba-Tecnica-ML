@@ -11,11 +11,18 @@ import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.SingleItemListBinding
 import com.bumptech.glide.Glide
 
+/**
+ * Adapter to specify how to display each item
+ */
 class ResultsAdapter(private val onItemClick: (item: Item) -> Unit) :
     RecyclerView.Adapter<ResultsAdapter.ResultsListViewHolder>() {
 
     private val list = mutableListOf<Item>()
 
+    /**
+     * function to update the list after the adapter is initialized
+     * @param newList the list updated
+     */
     fun updateList(newList: List<Item>) {
         list.clear()
         list.addAll(newList)
@@ -42,6 +49,10 @@ class ResultsAdapter(private val onItemClick: (item: Item) -> Unit) :
     inner class ResultsListViewHolder(private val binding: SingleItemListBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * function to bind the item info into the view
+         * @param item item to be displayed
+         */
         fun bind(item: Item) {
 
             binding.item = item

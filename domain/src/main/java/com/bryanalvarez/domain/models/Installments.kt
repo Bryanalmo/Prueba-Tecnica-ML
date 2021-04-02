@@ -7,6 +7,10 @@ data class Installments(
     val quantity : Int,
     val amount : Float
 ): Serializable {
+
+    /**
+     * function to get the amount formatted
+     */
     fun getAmountFormatted (): String? {
         return try {
             val formatter = DecimalFormat("#,###")

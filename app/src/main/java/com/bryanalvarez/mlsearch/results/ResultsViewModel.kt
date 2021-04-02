@@ -26,6 +26,10 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
     var bySearch = false
     var isLastPage = false
 
+    /**
+     * function to instantiate the itemsList (if it hasn't been) and return returns it to be observe
+     * it verifies the bySearch to know if it should bring the items by user search or by category
+     */
     fun getItemsList(): LiveData<MutableList<Item>>{
         if(!::itemsList.isInitialized){
             itemsList = MutableLiveData()
@@ -34,15 +38,18 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
         return itemsList
     }
 
+    /**
+     * function to execute the GetItemsBySearch interactor to bring the items by search list
+     */
     private fun getItemsBySearchData() {
-        enableDesableLoading(true)
+        enableDisableLoading(true)
         val params = GetItemsBySearch.Params(searchText, currentOffset)
         getItemsBySearch.execute(params){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     itemsResultsError.postValue(it.exception.localizedMessage)
-                    enableDesableLoading(false)
+                    enableDisableLoading(false)
                 },{
                     Log.d("MYLOG", "items -> $it")
                     handleItemListResponse(it)
@@ -51,7 +58,10 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
         }
     }
 
-    private fun enableDesableLoading(loading: Boolean){
+    /**
+     * function to activate or deactivate the loading variables
+     */
+    private fun enableDisableLoading(loading: Boolean){
         if(itemsListInfo == null){
             loadingItemsList = loading
         }else{
@@ -60,9 +70,12 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
         notifyChange()
     }
 
+    /**
+     * function to handle the response, it updates the list and the currentOffset for pagination purposes
+     */
     private fun handleItemListResponse(responseInfo: ItemsListInfo){
         currentOffset = responseInfo.paging.offset + PAGE_LIMIT
-        enableDesableLoading(false)
+        enableDisableLoading(false)
         if(itemsListInfo == null){
             itemsListInfo = responseInfo
             itemsList.postValue(responseInfo.results)
@@ -75,15 +88,18 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
         }
     }
 
+    /**
+     * function to execute the GetItemsByCategory interactor to bring the item by category list
+     */
     private fun getItemsByCategoryData() {
-        enableDesableLoading(true)
+        enableDisableLoading(true)
         val params = GetItemsByCategory.Params(categorySelected.id!!, currentOffset)
         getItemsByCategory.execute(params){either ->
             either.fold(
                 {
                     Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
                     itemsResultsError.postValue(it.exception.localizedMessage)
-                    enableDesableLoading(false)
+                    enableDisableLoading(false)
                 },{
                     Log.d("MYLOG", "items by category -> $it")
                     handleItemListResponse(it)

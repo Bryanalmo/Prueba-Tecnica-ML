@@ -8,10 +8,17 @@ import com.bryanalvarez.domain.models.UserSearch
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.SingleRecentSearchBinding
 
+/**
+ * Adapter to specify how to display each item search
+ */
 class RecentSearchAdapter(private val onItemClick: (userSearch: UserSearch) -> Unit) : RecyclerView.Adapter<RecentSearchAdapter.RecentSearchViewHolder>() {
 
     private val list = mutableListOf<UserSearch>()
 
+    /**
+     * function to update the list after the adapter is initialized
+     * @param newList the list updated
+     */
     fun updateList(newList: List<UserSearch>) {
         list.clear()
         list.addAll(newList)
@@ -38,6 +45,10 @@ class RecentSearchAdapter(private val onItemClick: (userSearch: UserSearch) -> U
     inner class RecentSearchViewHolder(private val binding: SingleRecentSearchBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
+        /**
+         * function to bind the userSearch info into the view
+         * @param userSearch userSearch to be displayed
+         */
         fun bind(userSearch: UserSearch) {
 
             binding.userSearch = userSearch

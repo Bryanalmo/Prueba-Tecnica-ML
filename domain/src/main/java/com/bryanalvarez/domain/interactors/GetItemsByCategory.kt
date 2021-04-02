@@ -16,6 +16,9 @@ class GetItemsByCategory (private val repository: Repository):
         val offset: Int? = 0
     ) : UseCase.Input
 
+    /**
+     * override function to call the repository in the coroutine
+     */
     override suspend fun run(parameter: Params?): Either<Failure, ItemsListInfo> {
         repository.getItemsByCategory(parameter?.categoryId!!, parameter?.offset!!).fold(
             {

@@ -17,12 +17,18 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
     var loadingUserSearchList = false
     var userSearchListIsEmpty = false
 
+    /**
+     * function to instantiate the userSearchList and returns it to be observe
+     */
     fun getUserSearchList(): LiveData<List<UserSearch>> {
         userSearchList = MutableLiveData()
         getUserSearchListData()
         return userSearchList
     }
 
+    /**
+     * function to execute the GetUserRecentSearch interactor to bring the searches list
+     */
     private fun getUserSearchListData() {
         loadingUserSearchList = true
         notifyChange()
@@ -44,6 +50,10 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
         }
     }
 
+    /**
+     * function to execute the AddUserSearch interactor and save a new user search locally
+     * @param search new search typed by the user
+     */
     fun addUserSearch(search: String) {
         addUserSearch.execute(AddUserSearch.Params(search)){either ->
             either.fold(

@@ -7,6 +7,9 @@ import kotlin.coroutines.CoroutineContext
 
 abstract class UseCase<T, I: UseCase.Input>() {
 
+    /**
+     * function to launch run function inside another threat using coroutines
+     */
     fun execute(parameter: I?,
                 block: (Either<Failure, T>) -> Unit
     ) {

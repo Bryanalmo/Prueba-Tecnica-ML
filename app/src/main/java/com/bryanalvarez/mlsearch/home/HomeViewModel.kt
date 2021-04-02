@@ -14,12 +14,18 @@ class HomeViewModel(private val getCategories: GetCategories): ObservableViewMod
     var loadingCategories = false
     var categoryError = MutableLiveData<String>()
 
+    /**
+     * function to instantiate the categoriesList and returns it to be observe
+     */
     fun getCategories(): LiveData<List<Category>> {
         categoriesList = MutableLiveData()
         getCategoriesData()
         return categoriesList
     }
 
+    /**
+     * function to execute the GetCategories interactor to bring the categories list
+     */
     private fun getCategoriesData() {
         loadingCategories = true
         notifyChange()

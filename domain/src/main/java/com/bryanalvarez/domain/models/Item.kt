@@ -19,6 +19,9 @@ data class Item(
     val attributes: List<Attribute>? = null
 ): Serializable {
 
+    /**
+     * function to get the price formatted
+     */
     fun getPriceFormatted (): String? {
         return try {
             val formatter = DecimalFormat("#,###")
@@ -28,6 +31,9 @@ data class Item(
         }
     }
 
+    /**
+     * function to get the item condition translated
+     */
     fun getConditionTranslate(): String {
         return when(condition){
             "new" -> "Nuevo"

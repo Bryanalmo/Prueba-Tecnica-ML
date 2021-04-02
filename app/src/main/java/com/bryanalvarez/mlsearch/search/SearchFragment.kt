@@ -10,6 +10,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.DialogFragment
@@ -46,22 +47,13 @@ class SearchFragment : DialogFragment() {
         super.onViewCreated(view, savedInstanceState)
 
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
-            toolbarSearch.navigationIcon= ContextCompat.getDrawable(view.context, R.drawable.ic_back)
-            toolbarSearch.setNavigationOnClickListener{
-                dismiss()
-            }
+            setupToolBar(view)
         }
 
         setupRecentSearch()
 
         editTextSearch.setOnEditorActionListener { textView, actionId, keyEvent ->
-            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
-                goToResults(textView.text.toString())
-                viewModel.addUserSearch(textView.text.toString())
-                hideKeyboard()
-                true
-            }
-            false
+            handleSearchButtonInKeyboard(actionId, textView)
         }
 
         viewModel.recentSearchesError.observe(this, Observer {
@@ -69,6 +61,20 @@ class SearchFragment : DialogFragment() {
         })
     }
 
+    /**
+     * function to set the toolbar's navigation icon and onclick listener
+     */
+    private fun setupToolBar(view: View){
+        toolbarSearch.navigationIcon= ContextCompat.getDrawable(view.context, R.drawable.ic_back)
+        toolbarSearch.setNavigationOnClickListener{
+            dismiss()
+        }
+    }
+
+    /**
+     * function to setup the recent searches list
+     * instantiate the RecentSearchAdapter and observes the list from the viewModel
+     */
     private fun setupRecentSearch() {
         val adapter = RecentSearchAdapter(){
             goToResults(it.textSearched)
@@ -83,12 +89,34 @@ class SearchFragment : DialogFragment() {
         })
     }
 
+    /**
+     * function to redirect the user to the results screen, it pass the search as an argument
+     * @param text search typed by the user
+     */
     private fun goToResults(text: String?) {
         var args = Bundle()
         args.putString("searchText", text)
         findNavController().navigate(R.id.action_searchFragment_to_resultsFragment, args)
     }
 
+    /**
+     * function to detect when the user press the search button in the keyboard
+     * @param actionId action sent by the button
+     * @param textView
+     */
+    private fun handleSearchButtonInKeyboard(actionId: Int, textView: TextView): Boolean{
+        if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+            goToResults(textView.text.toString())
+            viewModel.addUserSearch(textView.text.toString())
+            hideKeyboard()
+            return true
+        }
+        return false
+    }
+
+    /**
+     * function to hide the keyboard
+     */
     private fun hideKeyboard(){
         val imm = context?.getSystemService(Context.INPUT_METHOD_SERVICE) as InputMethodManager
         imm.hideSoftInputFromWindow(view?.windowToken, 0)

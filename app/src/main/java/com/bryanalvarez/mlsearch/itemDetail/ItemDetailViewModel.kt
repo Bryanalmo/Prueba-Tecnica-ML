@@ -17,6 +17,10 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
     var itemBySellerError = MutableLiveData<String>()
     var loadingItemsList = false
 
+    /**
+     * function to instantiate the itemsList and returns it to be observe
+     * @param item item selected by the user
+     */
     fun getItemsBySeller(item: Item): LiveData<List<Item>> {
         itemSelected = item
         notifyChange()
@@ -25,6 +29,9 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
         return itemsList
     }
 
+    /**
+     * function to execute the GetItemsBySeller interactor to bring the items list
+     */
     private fun getItemsBySellerData() {
         loadingItemsList = true
         notifyChange()

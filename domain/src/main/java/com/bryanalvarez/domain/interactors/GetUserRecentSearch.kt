@@ -15,6 +15,9 @@ class GetUserRecentSearch (private val repository: Repository):
         val param: Any
     ) : UseCase.Input
 
+    /**
+     * override function to call the repository in the coroutine
+     */
     override suspend fun run(parameter: Params?): Either<Failure, List<UserSearch>> {
         repository.getUserRecentSearch().fold(
             {

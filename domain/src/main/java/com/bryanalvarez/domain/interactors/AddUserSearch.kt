@@ -14,6 +14,9 @@ class AddUserSearch  (private val repository: Repository):
         val search: String
     ) : UseCase.Input
 
+    /**
+     * override function to call the repository in the coroutine
+     */
     override suspend fun run(parameter: Params?): Either<Failure, Boolean> {
         repository.addUserSearch(parameter?.search!!).fold(
             {

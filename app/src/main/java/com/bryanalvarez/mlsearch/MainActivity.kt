@@ -13,10 +13,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(R.layout.activity_main)
     }
 
+    /**
+     * function to display an snackBar with the error, it's called from different fragments
+     * @param parent fragment view
+     * @param message error message to be displayed
+     */
     fun showError(parent: View, message: String?) {
         val error = message ?: "Ocurrió un error, intentalo nuevamente"
-        val snackbar = Snackbar.make(parent, error, Snackbar.LENGTH_LONG)
-        snackbar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed))
-        snackbar.show()
+        val snackBar = Snackbar.make(parent, error, Snackbar.LENGTH_LONG)
+        snackBar.view.setBackgroundColor(ContextCompat.getColor(this, R.color.colorRed))
+        snackBar.show()
     }
 }

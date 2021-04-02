@@ -8,6 +8,10 @@ import com.bryanalvarez.data.remote.Service
 import com.bryanalvarez.domain.repository.Repository
 import org.koin.dsl.module
 
+/**
+ * module that contains and provides the local and external repositories,
+ * also provides the Service (retrofit instance)
+ */
 val repositoryModule = module {
 
     fun provideRepository(

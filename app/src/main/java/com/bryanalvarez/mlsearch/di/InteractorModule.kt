@@ -4,6 +4,9 @@ import com.bryanalvarez.domain.interactors.*
 import com.bryanalvarez.domain.repository.Repository
 import org.koin.dsl.module
 
+/**
+ * module that contains and provides all the interactors
+ */
 val interactorModule = module {
 
     fun provideGetItemsBySearchInteractor(repository: Repository): GetItemsBySearch = GetItemsBySearch(repository)

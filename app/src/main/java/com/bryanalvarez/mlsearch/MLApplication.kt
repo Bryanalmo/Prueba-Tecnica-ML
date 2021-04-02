@@ -10,6 +10,9 @@ import org.koin.core.context.startKoin
 
 class MLApplication: Application(){
 
+    /**
+     * starts Koin for dependency injection
+     */
     override fun onCreate() {
         super.onCreate()
         startKoin {
