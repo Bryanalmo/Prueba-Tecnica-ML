@@ -80,7 +80,6 @@ class ResultsFragment : Fragment() {
         viewModel.getItemsList().observe(this, Observer { list ->
             list.let {
                 adapter.updateList(it.toList())
-                Log.d("MYLOG", "getItemsList observe ${it.size} ")
             }
         })
     }

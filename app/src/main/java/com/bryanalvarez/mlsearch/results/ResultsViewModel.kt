@@ -66,12 +66,10 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
         if(itemsListInfo == null){
             itemsListInfo = responseInfo
             itemsList.postValue(responseInfo.results)
-            Log.d("MYLOG", "items first time -> $${responseInfo.results.size}")
             itemsListIsEmpty = responseInfo.results.isEmpty()
         }else{
             var updatedItems = itemsList.value
             updatedItems?.addAll(responseInfo.results)
-            Log.d("MYLOG", "scroll -> ${itemsList.value?.size} -- ${responseInfo.results.size} ${updatedItems?.size}")
             itemsList.postValue(updatedItems ?: mutableListOf())
             isLastPage = responseInfo.results.isEmpty()
         }

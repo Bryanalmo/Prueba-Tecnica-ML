@@ -50,7 +50,8 @@ class ResultsViewModelTest {
     @Test
     fun `get items by search, return list`() = runBlocking{
         resultsViewModel.searchText = "Iphone"
-        val itemsListBySearch = resultsViewModel.getItemsList(true).getOrAwaitValue()
+        resultsViewModel.bySearch = true
+        val itemsListBySearch = resultsViewModel.getItemsList().getOrAwaitValue()
         print(itemsListBySearch)
         Truth.assertThat(itemsListBySearch).isNotEmpty()
     }
@@ -59,7 +60,8 @@ class ResultsViewModelTest {
     fun `get items by seller, returns error`() = runBlocking{
         repository.setShouldReturnError(true)
         resultsViewModel.searchText = ""
-        resultsViewModel.getItemsList(true)
+        resultsViewModel.bySearch = true
+        resultsViewModel.getItemsList()
         val errorValue = resultsViewModel.itemsResultsError.getOrAwaitValue()
         print(errorValue)
         Truth.assertThat(errorValue).isNotNull()
@@ -68,7 +70,8 @@ class ResultsViewModelTest {
     @Test
     fun `get items by category, return list`() = runBlocking{
         resultsViewModel.categorySelected = Category("id", "cat 1")
-        val itemsListByCategory = resultsViewModel.getItemsList(false).getOrAwaitValue()
+        resultsViewModel.bySearch = false
+        val itemsListByCategory = resultsViewModel.getItemsList().getOrAwaitValue()
         print(itemsListByCategory)
         Truth.assertThat(itemsListByCategory).isNotEmpty()
     }
@@ -77,7 +80,8 @@ class ResultsViewModelTest {
     fun `get items by category, returns error`() = runBlocking{
         repository.setShouldReturnError(true)
         resultsViewModel.categorySelected = Category(id = "")
-        resultsViewModel.getItemsList(false)
+        resultsViewModel.bySearch = false
+        resultsViewModel.getItemsList()
         val errorValue = resultsViewModel.itemsResultsError.getOrAwaitValue()
         print(errorValue)
         Truth.assertThat(errorValue).isNotNull()
