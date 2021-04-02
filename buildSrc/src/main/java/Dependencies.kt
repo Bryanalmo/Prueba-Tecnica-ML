@@ -28,7 +28,7 @@ object Versions {
     val coroutinesCore ="1.0.1"
     val coroutinesAndroid ="1.0.1"
     val coroutinesTest = "1.4.3"
-    val paging = "2.1.2"
+    val paging = "3.0.0-alpha06"
     val loggingInterceptor = "4.0.1"
     val mockito = "2.+"
     val coreTesting = "2.1.0"

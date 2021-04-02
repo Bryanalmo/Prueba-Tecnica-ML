@@ -5,17 +5,19 @@ import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
 import com.bryanalvarez.domain.models.Item
+import com.bryanalvarez.domain.models.ItemsListInfo
 import com.bryanalvarez.domain.repository.Repository
 
 class GetItemsBySearch(private val repository: Repository):
-    UseCase<List<Item>, GetItemsBySearch.Params>() {
+    UseCase<ItemsListInfo, GetItemsBySearch.Params>() {
 
     data class Params(
-        val search: String
+        val search: String,
+        val offset: Int? = 0
     ) : UseCase.Input
 
-    override suspend fun run(parameter: Params?): Either<Failure, List<Item>> {
-        repository.getItemsBySearch(parameter?.search!!).fold(
+    override suspend fun run(parameter: Params?): Either<Failure, ItemsListInfo> {
+        repository.getItemsBySearch(parameter?.search!!, parameter?.offset!!).fold(
             {
                 return Left(it)
             },{
