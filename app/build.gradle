@@ -80,5 +80,4 @@ dependencies {
     testImplementation Dep.coroutinesTest
     androidTestImplementation Dep.coroutinesTest
 
-    implementation Dep.paging
 }

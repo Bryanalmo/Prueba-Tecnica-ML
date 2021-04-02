@@ -40,7 +40,6 @@ dependencies {
     implementation Dep.retrofit
     implementation Dep.retrofitConverterGson
     implementation Dep.retrofitAdapter
-    implementation Dep.paging
 
     implementation Dep.rxAndroid
     implementation Dep.rxJava
