@@ -21,8 +21,10 @@ class SearchViewModel(private val getUserRecentSearch: GetUserRecentSearch ,
      * function to instantiate the userSearchList and returns it to be observe
      */
     fun getUserSearchList(): LiveData<List<UserSearch>> {
-        userSearchList = MutableLiveData()
-        getUserSearchListData()
+        if(!::userSearchList.isInitialized){
+            userSearchList = MutableLiveData()
+            getUserSearchListData()
+        }
         return userSearchList
     }
 

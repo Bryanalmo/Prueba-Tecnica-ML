@@ -1,7 +1,6 @@
 package com.bryanalvarez.mlsearch.results
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -13,7 +12,6 @@ import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.bryanalvarez.domain.constants.PAGE_LIMIT
 import com.bryanalvarez.domain.models.Category
 import com.bryanalvarez.domain.models.Item
 import com.bryanalvarez.mlsearch.MainActivity
@@ -78,10 +76,12 @@ class ResultsFragment : Fragment() {
         val adapter = ResultsAdapter{ item ->
             goToItemDetail(item)
         }
+        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         resultsList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         resultsList.adapter = adapter
         resultsList.isNestedScrollingEnabled = false
         resultsList.addOnScrollListener(scrollListener)
+
         resultsList.addItemDecoration(
             DividerItemDecoration(
                 context,
@@ -128,7 +128,7 @@ class ResultsFragment : Fragment() {
             val shouldPaginate = isNotLoadingAndNotLastPage && isAtLastItem && isNotAtBeginning &&
                      isScrolling
             if(shouldPaginate) {
-                viewModel.getItemsList()
+                viewModel.callItemsListFromSource()
                 isScrolling = false
             }
         }

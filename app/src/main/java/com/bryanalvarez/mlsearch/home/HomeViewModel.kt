@@ -18,8 +18,10 @@ class HomeViewModel(private val getCategories: GetCategories): ObservableViewMod
      * function to instantiate the categoriesList and returns it to be observe
      */
     fun getCategories(): LiveData<List<Category>> {
-        categoriesList = MutableLiveData()
-        getCategoriesData()
+        if(!::categoriesList.isInitialized){
+            categoriesList = MutableLiveData()
+            getCategoriesData()
+        }
         return categoriesList
     }
 

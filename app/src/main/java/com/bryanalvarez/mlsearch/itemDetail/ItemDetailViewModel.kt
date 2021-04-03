@@ -22,10 +22,12 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
      * @param item item selected by the user
      */
     fun getItemsBySeller(item: Item): LiveData<List<Item>> {
-        itemSelected = item
-        notifyChange()
-        itemsList = MutableLiveData()
-        getItemsBySellerData()
+        if(!::itemsList.isInitialized){
+            itemSelected = item
+            notifyChange()
+            itemsList = MutableLiveData()
+            getItemsBySellerData()
+        }
         return itemsList
     }
 
@@ -46,7 +48,11 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
                 },{
                     Log.d("MYLOG", "items by seller -> $it")
                     seller = it.seller
-                    itemsList.postValue(it.results.subList(0, 3))
+                    try{
+                        itemsList.postValue(it.results.subList(0, 3))
+                    }catch(e: Exception){
+                        itemsList.postValue(it.results)
+                    }
                     loadingItemsList = false
                     notifyChange()
                 }

@@ -28,14 +28,20 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
 
     /**
      * function to instantiate the itemsList (if it hasn't been) and return returns it to be observe
-     * it verifies the bySearch to know if it should bring the items by user search or by category
      */
     fun getItemsList(): LiveData<MutableList<Item>>{
         if(!::itemsList.isInitialized){
             itemsList = MutableLiveData()
+            callItemsListFromSource()
         }
-        if(bySearch) getItemsBySearchData() else getItemsByCategoryData()
         return itemsList
+    }
+
+    /**
+     * function to verify if it should bring items from categoryes or by search
+     */
+    fun callItemsListFromSource() {
+        if(bySearch) getItemsBySearchData() else getItemsByCategoryData()
     }
 
     /**

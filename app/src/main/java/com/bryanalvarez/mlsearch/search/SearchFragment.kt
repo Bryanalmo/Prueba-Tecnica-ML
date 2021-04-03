@@ -17,6 +17,7 @@ import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.bryanalvarez.mlsearch.MainActivity
 import com.bryanalvarez.mlsearch.R
 import com.bryanalvarez.mlsearch.databinding.FragmentSearchBinding
@@ -79,6 +80,7 @@ class SearchFragment : DialogFragment() {
         val adapter = RecentSearchAdapter(){
             goToResults(it.textSearched)
         }
+        adapter.stateRestorationPolicy = RecyclerView.Adapter.StateRestorationPolicy.PREVENT_WHEN_EMPTY
         recentSearchList.layoutManager = LinearLayoutManager(context, LinearLayoutManager.VERTICAL, false)
         recentSearchList.adapter = adapter
         recentSearchList.isNestedScrollingEnabled = false

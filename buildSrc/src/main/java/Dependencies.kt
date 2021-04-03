@@ -10,7 +10,7 @@ object Versions {
     const val junitExt = "1.1.1"
     const val espresso = "3.2.0"
     const val material = "1.1.0"
-    const val recyclerView = "1.0.0"
+    const val recyclerView = "1.2.0-alpha02"
     const val navigationFragment = "2.1.0"
     const val navigationUI = "2.1.0"
     const val glide = "4.11.0"
