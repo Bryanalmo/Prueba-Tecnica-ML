@@ -1,0 +1,66 @@
+apply plugin: 'com.android.library'
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-kapt'
+apply plugin: 'kotlin-android-extensions'
+
+android {
+    compileSdkVersion 29
+
+    defaultConfig {
+        minSdkVersion 21
+        targetSdkVersion 29
+        versionCode 1
+        versionName "1.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        consumerProguardFiles "consumer-rules.pro"
+    }
+
+    packagingOptions {
+        exclude 'META-INF/AL2.0'
+        exclude 'META-INF/LGPL2.1'
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+}
+
+dependencies {
+    api project(path: ':domain')
+    implementation fileTree(dir: "libs", include: ["*.jar"])
+    implementation Dep.kotlinStandardLibrary
+    implementation Dep.arrowCore
+    implementation Dep.androidxCore
+    implementation Dep.appcompat
+
+    implementation Dep.retrofit
+    implementation Dep.retrofitConverterGson
+    implementation Dep.retrofitAdapter
+
+    implementation Dep.rxAndroid
+    implementation Dep.rxJava
+
+    implementation Dep.roomRuntime
+    implementation Dep.roomKtx
+    kapt Dep.roomCompiler
+
+    androidTestImplementation Dep.junit
+    androidTestImplementation Dep.junitExt
+    androidTestImplementation Dep.espresso
+    testImplementation Dep.junit
+    testImplementation Dep.junitExt
+    androidTestImplementation Dep.mockito
+    testImplementation Dep.mockito
+    androidTestImplementation Dep.coreTesting
+    testImplementation Dep.coreTesting
+    androidTestImplementation Dep.testCore
+    testImplementation Dep.testCore
+    androidTestImplementation Dep.truth
+    testImplementation Dep.truth
+
+    implementation Dep.loggingInterceptor
+}
