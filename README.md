@@ -38,21 +38,21 @@ En cada una de las capas mencionadas se realizaron las pruebas unitarias necesar
 ## Flujo dentro de la aplicación 
 
 En la primera pantalla se muestran una lista con todas las categorías disponibles
-[image](https://user-images.githubusercontent.com/40524653/113490828-5230d480-9492-11eb-8500-268490755649.png)
+![Diagram](https://user-images.githubusercontent.com/40524653/113490828-5230d480-9492-11eb-8500-268490755649.png)
 
 Al seleccionar el buscador en la parte superior se mostrará la pantalla de busqueda en la cual, el usuario prodrá ver su historial de busqueda
 así como escribir el producto que desea buscar
-[image](https://user-images.githubusercontent.com/40524653/113490892-a1770500-9492-11eb-843d-91e4d022f14a.png)
+![Diagram](https://user-images.githubusercontent.com/40524653/113490892-a1770500-9492-11eb-843d-91e4d022f14a.png)
 
 
 Luego de presionar el botón para buscar en el teclado si se encuentran resultados el usuario verá la lista de items, de lo contrario verá un mensaje 
 indicando que debe intentar de nuevo 
-[image](https://user-images.githubusercontent.com/40524653/113490979-2530f180-9493-11eb-911b-7b1a958adf7a.png)
+![Diagram](https://user-images.githubusercontent.com/40524653/113490979-2530f180-9493-11eb-911b-7b1a958adf7a.png)
 
 Al seleccionar un item de la lista el usuarios verá el detalle del producto en el cual también encontrará información relacionada con el vendedor
-[image](https://user-images.githubusercontent.com/40524653/113491052-848f0180-9493-11eb-8f23-e1745a3a7074.png)
-[image](https://user-images.githubusercontent.com/40524653/113491055-8b1d7900-9493-11eb-8884-33f9332da714.png)
-[image](https://user-images.githubusercontent.com/40524653/113491062-907ac380-9493-11eb-919a-b9aee3b2f886.png)
+![Diagram](https://user-images.githubusercontent.com/40524653/113491052-848f0180-9493-11eb-8f23-e1745a3a7074.png)
+![Diagram](https://user-images.githubusercontent.com/40524653/113491055-8b1d7900-9493-11eb-8884-33f9332da714.png)
+![Diagram](https://user-images.githubusercontent.com/40524653/113491062-907ac380-9493-11eb-919a-b9aee3b2f886.png)
 
 ## Conceptos y librerías utilizadas
 
