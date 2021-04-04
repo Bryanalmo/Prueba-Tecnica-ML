@@ -37,7 +37,8 @@ En cada una de las capas mencionadas se realizaron las pruebas unitarias necesar
 
 ## Flujo dentro de la aplicación 
 
-En la primera pantalla se muestran una lista con todas las categorías disponibles 
+En la primera pantalla se muestran una lista con todas las categorías disponibles, adicionalmente, si el usuario ya ha visto el detalle de algún producto, este 
+aparecerá en la sección de visto recientemente.
 
 <img src="https://user-images.githubusercontent.com/40524653/113515134-41d33500-9538-11eb-8668-85148ff79dab.png" width="200" height="400">
 
