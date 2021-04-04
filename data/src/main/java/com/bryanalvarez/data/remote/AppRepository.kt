@@ -5,6 +5,7 @@ import arrow.core.Either
 import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
+import com.bryanalvarez.data.local.repository.LastSeenItemRepository
 import com.bryanalvarez.data.local.repository.UserSearchRepository
 import com.bryanalvarez.domain.constants.PAGE_LIMIT
 import com.bryanalvarez.domain.models.*
@@ -13,7 +14,8 @@ import org.json.JSONException
 import java.lang.Exception
 
 class AppRepository(private val service: Service,
-                    private val userSearchRepository: UserSearchRepository): Repository {
+                    private val userSearchRepository: UserSearchRepository,
+                    private val lastSeenItemRepository: LastSeenItemRepository): Repository {
 
     /**
      * function to get the items by search from the Retrofit service

@@ -2,6 +2,7 @@ package com.bryanalvarez.mlsearch.di
 
 import android.content.Context
 import com.bryanalvarez.data.local.MLDataBase
+import com.bryanalvarez.data.local.repository.LastSeenItemRepository
 import com.bryanalvarez.data.local.repository.UserSearchRepository
 import com.bryanalvarez.data.remote.AppRepository
 import com.bryanalvarez.data.remote.Service
@@ -20,6 +21,8 @@ val repositoryModule = module {
     fun provideService(context: Context): Service = Service.getService(context)
     fun provideUserSearchRepository(context: Context): UserSearchRepository = UserSearchRepository(
         MLDataBase.getDatabase(context).userSearchDao())
+    fun provideLastSeenItemRepository(context: Context): LastSeenItemRepository = LastSeenItemRepository(
+        MLDataBase.getDatabase(context).lastSeenItemDao())
 
     single { provideRepository(get(), get()) }
     single { provideService(get()) }
