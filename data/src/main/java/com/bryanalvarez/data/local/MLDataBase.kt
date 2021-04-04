@@ -4,6 +4,7 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import com.bryanalvarez.data.local.dao.LastSeenItemDao
 import com.bryanalvarez.data.local.dao.UserSearchDao
 import com.bryanalvarez.domain.models.UserSearch
 
@@ -11,6 +12,7 @@ import com.bryanalvarez.domain.models.UserSearch
 abstract class MLDataBase: RoomDatabase() {
 
     abstract fun userSearchDao(): UserSearchDao
+    abstract fun lastSeenItemDao(): LastSeenItemDao
 
     companion object {
         @Volatile

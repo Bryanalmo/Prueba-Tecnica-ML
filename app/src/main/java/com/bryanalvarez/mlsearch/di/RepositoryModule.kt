@@ -17,14 +17,16 @@ val repositoryModule = module {
 
     fun provideRepository(
         service: Service,
-        userSearchRepository: UserSearchRepository): Repository = AppRepository(service, userSearchRepository)
+        userSearchRepository: UserSearchRepository,
+        lastSeenItemRepository: LastSeenItemRepository): Repository = AppRepository(service, userSearchRepository, lastSeenItemRepository)
     fun provideService(context: Context): Service = Service.getService(context)
     fun provideUserSearchRepository(context: Context): UserSearchRepository = UserSearchRepository(
         MLDataBase.getDatabase(context).userSearchDao())
     fun provideLastSeenItemRepository(context: Context): LastSeenItemRepository = LastSeenItemRepository(
         MLDataBase.getDatabase(context).lastSeenItemDao())
 
-    single { provideRepository(get(), get()) }
+    single { provideRepository(get(), get(), get()) }
     single { provideService(get()) }
     single { provideUserSearchRepository( get()) }
+    single { provideLastSeenItemRepository( get()) }
 }
