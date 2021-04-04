@@ -37,22 +37,24 @@ En cada una de las capas mencionadas se realizaron las pruebas unitarias necesar
 
 ## Flujo dentro de la aplicación 
 
-En la primera pantalla se muestran una lista con todas las categorías disponibles
+En la primera pantalla se muestran una lista con todas las categorías disponibles 
+
 <img src="https://user-images.githubusercontent.com/40524653/113515134-41d33500-9538-11eb-8668-85148ff79dab.png" width="200" height="400">
 
 Al seleccionar el buscador en la parte superior se mostrará la pantalla de busqueda en la cual, el usuario prodrá ver su historial de busqueda
-así como escribir el producto que desea buscar
-![Diagram](https://user-images.githubusercontent.com/40524653/113490892-a1770500-9492-11eb-843d-91e4d022f14a.png)
+así como escribir el producto que desea buscar 
 
+<img src="https://user-images.githubusercontent.com/40524653/113490892-a1770500-9492-11eb-843d-91e4d022f14a.png" width="200" height="400">
 
 Luego de presionar el botón para buscar en el teclado si se encuentran resultados el usuario verá la lista de items, de lo contrario verá un mensaje 
 indicando que debe intentar de nuevo 
-![Diagram](https://user-images.githubusercontent.com/40524653/113490979-2530f180-9493-11eb-911b-7b1a958adf7a.png)
+
+<img src="https://user-images.githubusercontent.com/40524653/113490979-2530f180-9493-11eb-911b-7b1a958adf7a.png" width="200" height="400">
 
 Al seleccionar un item de la lista el usuarios verá el detalle del producto en el cual también encontrará información relacionada con el vendedor
-![Diagram](https://user-images.githubusercontent.com/40524653/113491052-848f0180-9493-11eb-8f23-e1745a3a7074.png)
-![Diagram](https://user-images.githubusercontent.com/40524653/113491055-8b1d7900-9493-11eb-8884-33f9332da714.png)
-![Diagram](https://user-images.githubusercontent.com/40524653/113491062-907ac380-9493-11eb-919a-b9aee3b2f886.png)
+
+<img src="https://user-images.githubusercontent.com/40524653/113491052-848f0180-9493-11eb-8f23-e1745a3a7074.png" width="200" height="400"> <img src="https://user-images.githubusercontent.com/40524653/113491055-8b1d7900-9493-11eb-8884-33f9332da714.png" width="200" height="400"> <img src="https://user-images.githubusercontent.com/40524653/113491062-907ac380-9493-11eb-919a-b9aee3b2f886.png" width="200" height="400">
+
 
 ## Conceptos y librerías utilizadas
 
