@@ -3,7 +3,6 @@ package com.bryanalvarez.mlsearch.itemDetail
 import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
-import arrow.core.Failure
 import com.bryanalvarez.domain.interactors.GetItemsBySeller
 import com.bryanalvarez.domain.models.Item
 import com.bryanalvarez.domain.models.Seller
@@ -37,7 +36,7 @@ class ItemDetailViewModel(private val getItemsBySeller: GetItemsBySeller): Obser
     private fun getItemsBySellerData() {
         loadingItemsList = true
         notifyChange()
-        val params = GetItemsBySeller.Params(itemSelected.seller?.id)
+        val params = GetItemsBySeller.Params(itemSelected.seller?.idSeller)
         getItemsBySeller.execute(params){either ->
             either.fold(
                 {

@@ -100,6 +100,7 @@ class ResultsFragment : Fragment() {
      * @param item item selected to be explored
      */
     private fun goToItemDetail(item: Item) {
+        viewModel.addItemToLastSeen(item)
         var args = Bundle()
         args.putSerializable("itemSelected", item)
         findNavController().navigate(R.id.action_resultsFragment_to_itemDetailFragment, args)

@@ -145,4 +145,30 @@ class AppRepository(private val service: Service,
         }
     }
 
+    override suspend fun getLastSeenItem(): Either<Failure, Item> {
+        return try{
+            val data = lastSeenItemRepository.getLastSeenItem()
+            Log.d("MYLOG","getLastSeenItem data $data" )
+            Right(data)
+        }catch (e: Exception) {
+            Log.d("MYLOG", "getLastSeenItem ERROR EX -> ${e.localizedMessage}")
+            Left(Failure(Throwable(e.message.toString())))
+        }
+    }
+
+    override suspend fun addLastSeenItem(item: Item): Either<Failure, Boolean> {
+        return try{
+            lastSeenItemRepository.deleteAll()
+            val data = lastSeenItemRepository.insertItem(item)
+            if(data != null){
+                Right(true)
+            }else{
+                Left(Failure(Throwable()))
+            }
+        }catch (e: Exception) {
+            Log.d("MYLOG", "addLastSeenItem ERROR EX -> ${e.localizedMessage}")
+            Left(Failure(Throwable(e.message.toString())))
+        }
+    }
+
 }

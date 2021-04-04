@@ -4,11 +4,15 @@ import android.content.Context
 import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
+import androidx.room.TypeConverters
 import com.bryanalvarez.data.local.dao.LastSeenItemDao
 import com.bryanalvarez.data.local.dao.UserSearchDao
+import com.bryanalvarez.domain.models.DataConverter
+import com.bryanalvarez.domain.models.Item
 import com.bryanalvarez.domain.models.UserSearch
 
-@Database(entities = [UserSearch::class], version = 3)
+@Database(entities = [UserSearch::class, Item::class], version = 6)
+@TypeConverters(DataConverter::class)
 abstract class MLDataBase: RoomDatabase() {
 
     abstract fun userSearchDao(): UserSearchDao

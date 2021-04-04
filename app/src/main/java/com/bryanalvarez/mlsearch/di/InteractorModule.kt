@@ -15,6 +15,8 @@ val interactorModule = module {
     fun provideGetCategoriesInteractor(repository: Repository): GetCategories = GetCategories(repository)
     fun provideGetItemsByCategoryInteractor(repository: Repository): GetItemsByCategory = GetItemsByCategory(repository)
     fun provideGetItemsBySellerInteractor(repository: Repository): GetItemsBySeller = GetItemsBySeller(repository)
+    fun provideGetLastSeenItemInteractor(repository: Repository): GetLastSeenItem = GetLastSeenItem(repository)
+    fun provideAddLastSeenItemInteractor(repository: Repository): AddLastSeenItem = AddLastSeenItem(repository)
 
     single { provideGetItemsBySearchInteractor(get()) }
     single { provideGetUserRecentSearchInteractor(get()) }
@@ -22,4 +24,6 @@ val interactorModule = module {
     single { provideGetCategoriesInteractor(get()) }
     single { provideGetItemsByCategoryInteractor(get()) }
     single { provideGetItemsBySellerInteractor(get()) }
+    single { provideGetLastSeenItemInteractor(get()) }
+    single { provideAddLastSeenItemInteractor(get()) }
 }

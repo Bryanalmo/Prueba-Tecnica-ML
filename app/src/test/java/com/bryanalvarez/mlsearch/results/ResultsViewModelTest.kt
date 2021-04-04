@@ -1,9 +1,13 @@
 package com.bryanalvarez.mlsearch.results
 
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
+import com.bryanalvarez.domain.interactors.AddLastSeenItem
 import com.bryanalvarez.domain.interactors.GetItemsByCategory
 import com.bryanalvarez.domain.interactors.GetItemsBySearch
 import com.bryanalvarez.domain.models.Category
+import com.bryanalvarez.domain.models.Item
+import com.bryanalvarez.domain.models.Seller
+import com.bryanalvarez.domain.models.UserSearch
 import com.bryanalvarez.mlsearch.mockRepository.AppMockedRepository
 import com.bryanalvarez.mlsearch.utils.getOrAwaitValue
 import com.google.common.truth.Truth
@@ -38,7 +42,8 @@ class ResultsViewModelTest {
         Dispatchers.setMain(mainThreadSurrogate)
         val getItemsBySearch = GetItemsBySearch(repository)
         val getItemsByCategory = GetItemsByCategory(repository)
-        resultsViewModel = ResultsViewModel(getItemsBySearch, getItemsByCategory)
+        val addLastSeenItem = AddLastSeenItem(repository)
+        resultsViewModel = ResultsViewModel(getItemsBySearch, getItemsByCategory, addLastSeenItem)
     }
 
     @After
@@ -85,5 +90,15 @@ class ResultsViewModelTest {
         val errorValue = resultsViewModel.itemsResultsError.getOrAwaitValue()
         print(errorValue)
         Truth.assertThat(errorValue).isNotNull()
+    }
+
+    @Test
+    fun `add new last seen item, returns item in list`() = runBlocking{
+        val lastSeenItem = Item(title = "Armario", seller = Seller(idSeller = "id3"))
+        resultsViewModel.addItemToLastSeen(lastSeenItem)
+        Thread.sleep(1000)
+        val lastSeenItemList = repository.lastSeenItemsList
+        print(lastSeenItemList)
+        Truth.assertThat(lastSeenItemList).contains(lastSeenItem)
     }
 }

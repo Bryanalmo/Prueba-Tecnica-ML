@@ -10,8 +10,8 @@ import org.koin.dsl.module
  * module that contains and provides all the viewModels
  */
 val viewModelModule = module {
-    viewModel { ResultsViewModel(get(), get()) }
+    viewModel { ResultsViewModel(get(), get(), get()) }
     viewModel { SearchViewModel(get(), get()) }
-    viewModel { HomeViewModel(get()) }
+    viewModel { HomeViewModel(get(), get()) }
     viewModel { ItemDetailViewModel(get()) }
 }

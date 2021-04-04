@@ -57,43 +57,133 @@
             </Toolbar>
         </com.google.android.material.appbar.AppBarLayout>
 
-        <androidx.constraintlayout.widget.ConstraintLayout
+        <ScrollView
+            android:id="@+id/homeScrollContainer"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:padding="@dimen/dimen10"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior">
 
-            <androidx.recyclerview.widget.RecyclerView
-                android:id="@+id/categoriesList"
-                android:fadeScrollbars="true"
-                android:scrollbars="horizontal"
+            <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="@{vm.loadingCategories ? View.GONE : View.VISIBLE}"
-                app:layout_constraintTop_toTopOf="parent"/>
+                android:layout_height="match_parent"
+                android:padding="@dimen/dimen10"
+                android:orientation="vertical">
 
-            <com.facebook.shimmer.ShimmerFrameLayout
-                android:id="@+id/loaderCategoriesList"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:visibility="@{vm.loadingCategories ? View.VISIBLE : View.GONE}"
-                tools:visibility="visible"
-                app:layout_constraintTop_toTopOf="parent">
+                <androidx.constraintlayout.widget.ConstraintLayout
+                    android:id="@+id/categoriesContainer"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
 
-                <LinearLayout
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/categoriesList"
+                        android:fadeScrollbars="true"
+                        android:scrollbars="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{vm.loadingCategories ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintTop_toTopOf="parent"/>
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:id="@+id/loaderCategoriesList"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{vm.loadingCategories ? View.VISIBLE : View.GONE}"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+
+                            <include layout="@layout/loader_single_category" />
+                            <include layout="@layout/loader_single_category" />
+                            <include layout="@layout/loader_single_category" />
+                            <include layout="@layout/loader_single_category" />
+
+                        </LinearLayout>
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+                <androidx.constraintlayout.widget.ConstraintLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:layout_marginTop="@dimen/dimen30">
 
-                    <include layout="@layout/loader_single_category" />
-                    <include layout="@layout/loader_single_category" />
-                    <include layout="@layout/loader_single_category" />
-                    <include layout="@layout/loader_single_category" />
+                    <androidx.cardview.widget.CardView
+                        android:id="@+id/lastItemSeenCard"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardElevation="@dimen/dimen5"
+                        app:cardCornerRadius="@dimen/dimen10"
+                        android:layout_margin="@dimen/dimen10"
+                        android:visibility="@{vm.lastSeenItemEmpty || vm.loadingLastSeenItem ? View.GONE : View.VISIBLE}"
+                        app:layout_constraintTop_toTopOf="parent"
+                        app:layout_constraintBottom_toBottomOf="parent">
 
-                </LinearLayout>
-            </com.facebook.shimmer.ShimmerFrameLayout>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:padding="@dimen/dimen10"
+                            android:orientation="vertical">
 
-        </androidx.constraintlayout.widget.ConstraintLayout>
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Visto Recientemente"
+                                android:layout_marginTop="@dimen/dimen10"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/dimenSp20"/>
+
+                            <ImageView
+                                android:id="@+id/lastSeenItemImage"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginVertical="@dimen/dimen15"
+                                tools:src="@drawable/ic_launcher_background"
+                                />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                tools:text="Item visto recientemente"
+                                android:text="@{vm.lastSeenItem.title}"
+                                android:textColor="@color/colorBlack"
+                                android:textSize="@dimen/dimenSp15"/>
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                tools:text="$ 600.990"
+                                app:layout_constraintLeft_toLeftOf="parent"
+                                app:layout_constraintTop_toBottomOf="@id/itemImage"
+                                android:layout_marginTop="@dimen/dimen10"
+                                android:textColor="@color/colorBlack"
+                                android:text="@{`$ ` + vm.lastSeenItem.getPriceFormatted}"
+                                android:textSize="@dimen/dimenSp20"/>
+
+                        </LinearLayout>
+
+                    </androidx.cardview.widget.CardView>
+
+                    <com.facebook.shimmer.ShimmerFrameLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:visibility="@{vm.loadingLastSeenItem ? View.VISIBLE : View.GONE}"
+                        tools:visibility="visible"
+                        app:layout_constraintTop_toTopOf="parent">
+
+                        <include layout="@layout/loader_last_seen_item" />
+
+                    </com.facebook.shimmer.ShimmerFrameLayout>
+
+                </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+            </LinearLayout>
+
+        </ScrollView>
 
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
