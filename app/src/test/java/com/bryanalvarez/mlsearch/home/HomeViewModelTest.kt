@@ -53,7 +53,7 @@ class HomeViewModelTest{
     fun `get categories data, returns error`() = runBlocking{
         repository.setShouldReturnError(true)
         homeViewModel.getCategories()
-        val errorValue = homeViewModel.categoryError.getOrAwaitValue()
+        val errorValue = homeViewModel.homeError.getOrAwaitValue()
         print(errorValue)
         assertThat(errorValue).isNotNull()
     }

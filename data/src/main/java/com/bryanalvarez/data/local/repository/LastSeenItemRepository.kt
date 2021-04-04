@@ -19,4 +19,11 @@ class LastSeenItemRepository (private val lastSeenItemDao: LastSeenItemDao) {
     fun insertItem(item: Item){
         lastSeenItemDao.insert(item)
     }
+
+    /**
+     * function to delete all items saved in the Room local Database
+     */
+    fun deleteAll(){
+        lastSeenItemDao.deleteAll()
+    }
 }

@@ -93,7 +93,7 @@ class AppMockedRepository: Repository {
             if(!shouldReturnError && sellerId.isNotEmpty()){
                 Right(SellerInfo(
                     Seller("id", "mocked seller", "url", Reputation("5_green", "gold")),
-                    itemsList.filter { item -> item.seller?.id == sellerId }
+                    itemsList.filter { item -> item.seller?.idSeller == sellerId }
                 ))
             }else{
                 Left(Failure(Throwable("")))
@@ -104,11 +104,11 @@ class AppMockedRepository: Repository {
     }
 
     private fun setupMockedData(){
-        itemsList.add(Item(title = "Iphone 5", seller = Seller(id = "id")))
-        itemsList.add(Item(title = "Iphone 4", seller = Seller(id = "id")))
-        itemsList.add(Item(title = "Iphone 3", seller = Seller(id = "id")))
-        itemsList.add(Item(title = "Xbox 360", seller = Seller(id = "id2")))
-        itemsList.add(Item(title = "Armario", seller = Seller(id = "id3")))
+        itemsList.add(Item(title = "Iphone 5", seller = Seller(idSeller = "id")))
+        itemsList.add(Item(title = "Iphone 4", seller = Seller(idSeller = "id")))
+        itemsList.add(Item(title = "Iphone 3", seller = Seller(idSeller = "id")))
+        itemsList.add(Item(title = "Xbox 360", seller = Seller(idSeller = "id2")))
+        itemsList.add(Item(title = "Armario", seller = Seller(idSeller = "id3")))
 
         recentSearchesList.add(UserSearch("Play 5 Nuevo"))
         recentSearchesList.add(UserSearch("Iphone 5"))

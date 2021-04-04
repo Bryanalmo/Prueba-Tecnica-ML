@@ -19,4 +19,10 @@ interface LastSeenItemDao {
     @Transaction
     @Query("SELECT * FROM lastSeenItem LIMIT 1")
     fun getLastSeenItem(): Item
+
+    /**
+     * function to delete all items saved in the local database
+     */
+    @Query("DELETE FROM lastSeenItem")
+    fun deleteAll()
 }

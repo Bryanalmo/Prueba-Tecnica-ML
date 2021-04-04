@@ -4,6 +4,7 @@ import android.util.Log
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import com.bryanalvarez.domain.constants.PAGE_LIMIT
+import com.bryanalvarez.domain.interactors.AddLastSeenItem
 import com.bryanalvarez.domain.interactors.GetItemsByCategory
 import com.bryanalvarez.domain.interactors.GetItemsBySearch
 import com.bryanalvarez.domain.models.Category
@@ -12,7 +13,8 @@ import com.bryanalvarez.domain.models.ItemsListInfo
 import com.bryanalvarez.mlsearch.core.ObservableViewModel
 
 class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
-                       private val getItemsByCategory: GetItemsByCategory): ObservableViewModel() {
+                       private val getItemsByCategory: GetItemsByCategory,
+                       private val addLastSeenItem: AddLastSeenItem): ObservableViewModel() {
 
     private lateinit var itemsList: MutableLiveData<MutableList<Item>>
     var itemsListInfo: ItemsListInfo? = null
@@ -109,6 +111,23 @@ class ResultsViewModel(private val getItemsBySearch: GetItemsBySearch,
                 },{
                     Log.d("MYLOG", "items by category -> $it")
                     handleItemListResponse(it)
+                }
+            )
+        }
+    }
+
+    /**
+     * function to execute the AddLastSeenItem interactor to add the item
+     * @param item item to be added
+     */
+    fun addItemToLastSeen(item: Item) {
+        val params = AddLastSeenItem.Params(item)
+        addLastSeenItem.execute(params){either ->
+            either.fold(
+                {
+                    Log.d("MYLOG ERROR", "error -> ${it.exception.localizedMessage}")
+                    itemsResultsError.postValue(it.exception.localizedMessage)
+                },{
                 }
             )
         }
