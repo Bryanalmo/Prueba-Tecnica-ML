@@ -1,8 +1,10 @@
 package com.bryanalvarez.mlsearch.home
 
+import android.os.Handler
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 
 import com.bryanalvarez.domain.interactors.GetCategories
+import com.bryanalvarez.domain.interactors.GetLastSeenItem
 import com.bryanalvarez.mlsearch.mockRepository.AppMockedRepository
 import com.bryanalvarez.mlsearch.utils.getOrAwaitValue
 import com.google.common.truth.Truth.assertThat
@@ -33,8 +35,9 @@ class HomeViewModelTest{
     fun setup(){
         Dispatchers.setMain(mainThreadSurrogate)
         var getCategoriesInteractor = GetCategories(repository)
+        var getLastSeenItem = GetLastSeenItem(repository)
         homeViewModel =
-            HomeViewModel(getCategoriesInteractor)
+            HomeViewModel(getCategoriesInteractor, getLastSeenItem)
     }
 
     @After
@@ -56,6 +59,27 @@ class HomeViewModelTest{
         val errorValue = homeViewModel.homeError.getOrAwaitValue()
         print(errorValue)
         assertThat(errorValue).isNotNull()
+    }
+
+    @Test
+    fun `get last seen item, returns item data`() = runBlocking{
+        homeViewModel.getLastSeenItem()
+        val urlItem = homeViewModel.urlLastSeenItem.getOrAwaitValue()
+        var lastItem = homeViewModel.lastSeenItem
+        print(lastItem)
+        assertThat(lastItem).isNotNull()
+        assertThat(urlItem).isNotEmpty()
+    }
+
+    @Test
+    fun `get last seen item, returns null`() = runBlocking{
+        repository.setShouldReturnError(true)
+        homeViewModel.getLastSeenItem()
+        Thread.sleep(1000)
+        var errorValue = homeViewModel.lastSeenItemEmpty
+        print(homeViewModel.lastSeenItem)
+        print(errorValue)
+        assertThat(errorValue).isTrue()
     }
 
 }

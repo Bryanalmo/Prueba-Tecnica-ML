@@ -10,6 +10,7 @@ import com.bryanalvarez.domain.repository.Repository
 class AppMockedRepository: Repository {
 
     private var itemsList = mutableListOf<Item>()
+    var lastSeenItemsList = mutableListOf<Item>()
     var recentSearchesList = mutableListOf<UserSearch>()
     private var categoriesList = mutableListOf<Category>()
     private var shouldReturnError = false
@@ -103,6 +104,32 @@ class AppMockedRepository: Repository {
         }
     }
 
+    override suspend fun getLastSeenItem(): Either<Failure, Item> {
+        return try {
+            if(!shouldReturnError){
+                Right(lastSeenItemsList.last())
+            }else{
+                lastSeenItemsList.clear()
+                Right(lastSeenItemsList.last())
+            }
+        }catch (e: Exception){
+            Left(Failure(Throwable(e.localizedMessage)))
+        }
+    }
+
+    override suspend fun addLastSeenItem(item: Item): Either<Failure, Boolean> {
+        return try {
+            if(!shouldReturnError){
+                lastSeenItemsList.add(item)
+                Right(true)
+            }else{
+                Left(Failure(Throwable()))
+            }
+        }catch (e: Exception){
+            Left(Failure(Throwable()))
+        }
+    }
+
     private fun setupMockedData(){
         itemsList.add(Item(title = "Iphone 5", seller = Seller(idSeller = "id")))
         itemsList.add(Item(title = "Iphone 4", seller = Seller(idSeller = "id")))
@@ -116,6 +143,8 @@ class AppMockedRepository: Repository {
         categoriesList.add(Category("id", "cat 1"))
         categoriesList.add(Category("id2", "cat 2"))
         categoriesList.add(Category("id3", "cat 3"))
+
+        lastSeenItemsList.add(Item(title = "Iphone 5", seller = Seller(idSeller = "id"), thumbnail = "url"))
 
     }
 }
