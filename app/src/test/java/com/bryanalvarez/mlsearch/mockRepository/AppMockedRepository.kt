@@ -10,6 +10,7 @@ import com.bryanalvarez.domain.repository.Repository
 class AppMockedRepository: Repository {
 
     private var itemsList = mutableListOf<Item>()
+    var lastSeenItemsList = mutableListOf<Item>()
     var recentSearchesList = mutableListOf<UserSearch>()
     private var categoriesList = mutableListOf<Category>()
     private var shouldReturnError = false
@@ -93,7 +94,7 @@ class AppMockedRepository: Repository {
             if(!shouldReturnError && sellerId.isNotEmpty()){
                 Right(SellerInfo(
                     Seller("id", "mocked seller", "url", Reputation("5_green", "gold")),
-                    itemsList.filter { item -> item.seller?.id == sellerId }
+                    itemsList.filter { item -> item.seller?.idSeller == sellerId }
                 ))
             }else{
                 Left(Failure(Throwable("")))
@@ -103,12 +104,38 @@ class AppMockedRepository: Repository {
         }
     }
 
+    override suspend fun getLastSeenItem(): Either<Failure, Item> {
+        return try {
+            if(!shouldReturnError){
+                Right(lastSeenItemsList.last())
+            }else{
+                lastSeenItemsList.clear()
+                Right(lastSeenItemsList.last())
+            }
+        }catch (e: Exception){
+            Left(Failure(Throwable(e.localizedMessage)))
+        }
+    }
+
+    override suspend fun addLastSeenItem(item: Item): Either<Failure, Boolean> {
+        return try {
+            if(!shouldReturnError){
+                lastSeenItemsList.add(item)
+                Right(true)
+            }else{
+                Left(Failure(Throwable()))
+            }
+        }catch (e: Exception){
+            Left(Failure(Throwable()))
+        }
+    }
+
     private fun setupMockedData(){
-        itemsList.add(Item(title = "Iphone 5", seller = Seller(id = "id")))
-        itemsList.add(Item(title = "Iphone 4", seller = Seller(id = "id")))
-        itemsList.add(Item(title = "Iphone 3", seller = Seller(id = "id")))
-        itemsList.add(Item(title = "Xbox 360", seller = Seller(id = "id2")))
-        itemsList.add(Item(title = "Armario", seller = Seller(id = "id3")))
+        itemsList.add(Item(title = "Iphone 5", seller = Seller(idSeller = "id")))
+        itemsList.add(Item(title = "Iphone 4", seller = Seller(idSeller = "id")))
+        itemsList.add(Item(title = "Iphone 3", seller = Seller(idSeller = "id")))
+        itemsList.add(Item(title = "Xbox 360", seller = Seller(idSeller = "id2")))
+        itemsList.add(Item(title = "Armario", seller = Seller(idSeller = "id3")))
 
         recentSearchesList.add(UserSearch("Play 5 Nuevo"))
         recentSearchesList.add(UserSearch("Iphone 5"))
@@ -116,6 +143,8 @@ class AppMockedRepository: Repository {
         categoriesList.add(Category("id", "cat 1"))
         categoriesList.add(Category("id2", "cat 2"))
         categoriesList.add(Category("id3", "cat 3"))
+
+        lastSeenItemsList.add(Item(title = "Iphone 5", seller = Seller(idSeller = "id"), thumbnail = "url"))
 
     }
 }

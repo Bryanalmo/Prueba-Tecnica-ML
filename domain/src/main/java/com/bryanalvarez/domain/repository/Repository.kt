@@ -16,4 +16,8 @@ interface Repository {
     suspend fun getItemsByCategory(categoryId: String, offset: Int): Either<Failure, ItemsListInfo>
 
     suspend fun getItemsBySeller(sellerId: String): Either<Failure, SellerInfo>
+
+    suspend fun getLastSeenItem(): Either<Failure, Item>
+
+    suspend fun addLastSeenItem(item: Item): Either<Failure, Boolean>
 }

@@ -5,6 +5,7 @@ import arrow.core.Either
 import arrow.core.Failure
 import arrow.core.Left
 import arrow.core.Right
+import com.bryanalvarez.data.local.repository.LastSeenItemRepository
 import com.bryanalvarez.data.local.repository.UserSearchRepository
 import com.bryanalvarez.domain.constants.PAGE_LIMIT
 import com.bryanalvarez.domain.models.*
@@ -13,7 +14,8 @@ import org.json.JSONException
 import java.lang.Exception
 
 class AppRepository(private val service: Service,
-                    private val userSearchRepository: UserSearchRepository): Repository {
+                    private val userSearchRepository: UserSearchRepository,
+                    private val lastSeenItemRepository: LastSeenItemRepository): Repository {
 
     /**
      * function to get the items by search from the Retrofit service
@@ -139,6 +141,32 @@ class AppRepository(private val service: Service,
             Left(Failure(Throwable()))
         }  catch (e: Exception) {
             Log.d("MYLOG", "getItemsBySeller ERROR EX -> ${e.localizedMessage}")
+            Left(Failure(Throwable(e.message.toString())))
+        }
+    }
+
+    override suspend fun getLastSeenItem(): Either<Failure, Item> {
+        return try{
+            val data = lastSeenItemRepository.getLastSeenItem()
+            Log.d("MYLOG","getLastSeenItem data $data" )
+            Right(data)
+        }catch (e: Exception) {
+            Log.d("MYLOG", "getLastSeenItem ERROR EX -> ${e.localizedMessage}")
+            Left(Failure(Throwable(e.message.toString())))
+        }
+    }
+
+    override suspend fun addLastSeenItem(item: Item): Either<Failure, Boolean> {
+        return try{
+            lastSeenItemRepository.deleteAll()
+            val data = lastSeenItemRepository.insertItem(item)
+            if(data != null){
+                Right(true)
+            }else{
+                Left(Failure(Throwable()))
+            }
+        }catch (e: Exception) {
+            Log.d("MYLOG", "addLastSeenItem ERROR EX -> ${e.localizedMessage}")
             Left(Failure(Throwable(e.message.toString())))
         }
     }

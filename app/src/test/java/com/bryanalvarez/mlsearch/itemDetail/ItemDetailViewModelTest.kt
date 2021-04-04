@@ -48,17 +48,17 @@ class ItemDetailViewModelTest {
 
     @Test
     fun `get items by seller, return list`() = runBlocking{
-        val item = Item(seller = Seller(id = "id"))
+        val item = Item(seller = Seller(idSeller = "id"))
         val itemsList = itemDetailViewModel.getItemsBySeller(item).getOrAwaitValue()
         print(itemsList)
-        assertThat(itemDetailViewModel.seller.id).isEqualTo("id")
+        assertThat(itemDetailViewModel.seller.idSeller).isEqualTo("id")
         assertThat(itemsList).isNotEmpty()
     }
 
     @Test
     fun `get items by seller, returns error`() = runBlocking{
         repository.setShouldReturnError(true)
-        val item = Item(seller = Seller(id = ""))
+        val item = Item(seller = Seller(idSeller = ""))
         itemDetailViewModel.getItemsBySeller(item)
         val errorValue = itemDetailViewModel.itemBySellerError.getOrAwaitValue()
         print(errorValue)
