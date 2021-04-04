@@ -38,7 +38,7 @@ En cada una de las capas mencionadas se realizaron las pruebas unitarias necesar
 ## Flujo dentro de la aplicación 
 
 En la primera pantalla se muestran una lista con todas las categorías disponibles
-![Diagram](https://user-images.githubusercontent.com/40524653/113490828-5230d480-9492-11eb-8500-268490755649.png)
+![image](https://user-images.githubusercontent.com/40524653/113515134-41d33500-9538-11eb-8668-85148ff79dab.png) with <img src="https://user-images.githubusercontent.com/40524653/113515134-41d33500-9538-11eb-8668-85148ff79dab.png" width="100" height="100">
 
 Al seleccionar el buscador en la parte superior se mostrará la pantalla de busqueda en la cual, el usuario prodrá ver su historial de busqueda
 así como escribir el producto que desea buscar
